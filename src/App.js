@@ -8,6 +8,10 @@ import WhatShouldIMake from "./pages/WhatShouldIMake/WhatShouldIMake";
 import {useContext} from "react";
 import {AuthContext} from "./context/AuthContext";
 import Profile from "./pages/Profile/Profile";
+import SignIn from "./pages/SignIn/SignIn";
+import SignUp from "./pages/SignUp/SignUp";
+import Favorites from "./pages/Favorites/Favorites";
+import RecipeOverview from "./pages/RecipeOverview/RecipeOverview";
 
 function App() {
     const {isAuth} = useContext(AuthContext);
@@ -22,8 +26,12 @@ function App() {
                 <Route path="what-should-i-make" element={<WhatShouldIMake/>}/>
                 <Route
                     path="profile"
-                    element={isAuth ? <Profile/> : <Navigate to="sign/in"/>}
+                    element={isAuth ? <Profile/> : <SignIn/>}
                 />
+                <Route path="favorites" element={<Favorites/>}/>
+                <Route path="sign-in" element={<SignIn/>}/>
+                <Route path="sign-up" element={<SignUp/>}/>
+                <Route path="recipes" element={<RecipeOverview/>}/>
             </Routes>
         </>
     )

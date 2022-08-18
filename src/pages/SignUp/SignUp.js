@@ -55,7 +55,7 @@ function SignUp() {
                 <button type="submit">Registreer</button>
             </form>
 
-            <p>Heb je al een account? Je kunt je <Link to="/signIn">hier</Link> inloggen.</p>
+            <p>Heb je al een account? Je kunt je <Link to="/sign-in">hier</Link> inloggen.</p>
         </div>
     );
 }

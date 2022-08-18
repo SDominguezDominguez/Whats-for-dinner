@@ -7,13 +7,13 @@ import {AuthContext} from "../../context/AuthContext";
 function SignIn() {
     const {login} = useContext(AuthContext);
     const {register, handleSubmit} = useForm();
-    const source = axios.CancelToken.source();
+    // const source = axios.CancelToken.source();
 
-    useEffect(() => {
-        return function cleanup() {
-            source.cancel();
-        }
-    }, []);
+    // useEffect(() => {
+    //     return function cleanup() {
+    //         source.cancel();
+    //     }
+    // }, []);
 
     async function makeLogInRequest(data) {
 
@@ -21,13 +21,14 @@ function SignIn() {
             const response = await axios.post("https://frontend-educational-backend.herokuapp.com/api/auth/signin", {
                 username: data.username,
                 password: data.password,
-            }, {
-                cancelToken: source.token,
+                // }, {
+                //     cancelToken: source.token,
             });
 
             login(response.data.accessToken);
 
-        } catch (e) {
+        } catch
+            (e) {
             console.error(e);
         }
     }
@@ -56,7 +57,7 @@ function SignIn() {
                 <button type="submit">Inloggen</button>
             </form>
 
-            <p>Heb je nog geen account? <Link to="/signUp">Registreer</Link> je dan eerst!</p>
+            <p>Heb je nog geen account? <Link to="/sign-up">Registreer</Link> je dan eerst!</p>
         </>
     );
 }

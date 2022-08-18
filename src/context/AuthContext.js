@@ -25,7 +25,7 @@ function AuthContextProvider({children}) {
                 user: null,
                 status: 'done',
             });
-        }}, [])
+        }}, []);
 
     function login(token) {
         localStorage.setItem("token", token);
@@ -65,7 +65,7 @@ function AuthContextProvider({children}) {
                 },
                 status: "done",
             });
-            history("/profiel");
+            history("/profile");
 
         } catch (e) {
             console.error(e);

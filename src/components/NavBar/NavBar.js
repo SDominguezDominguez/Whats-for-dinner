@@ -43,6 +43,9 @@ function NavBar() {
             </header>
             <nav>
                 <ul>
+                    <NavLink to="/">
+                        <li>Home</li>
+                    </NavLink>
                     <NavLink to="/what-should-i-make">
                         <li>What should I make?</li>
                     </NavLink>
