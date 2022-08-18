@@ -1,0 +1,16 @@
+.searchbar-home {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.searchbar-home input {
+    width: 80%;
+    font-size: 25px;
+    padding: 10px;
+}
+
+.searchbar-home button {
+    padding: 16px;
+    font-size: 15px;
+}
