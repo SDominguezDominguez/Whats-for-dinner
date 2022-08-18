@@ -1,0 +1,58 @@
+img {
+    height: 200px;
+    width: 300px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.header-buttons {
+    width: 25%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.header-buttons button {
+    background-color: hsl(173, 51%, 83%);
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 15px;
+    border: none;
+}
+
+.header-buttons button:hover {
+    background-color: hsl(173, 51%, 63%);
+}
+
+nav {
+    background-color: hsl(173, 51%, 83%);
+    padding: 2px;
+    margin: 20px 0;
+}
+
+ul {
+    display: flex;
+    justify-content: space-between;
+    list-style-type: none;
+    font-size: 20px;
+}
+
+nav a:link, a:visited {
+    text-decoration: none;
+    color: black;
+}
+
+nav a:hover {
+    background-color: hsl(173, 51%, 63%);
+    padding: 1px;
+    border-radius: 5px;
+}
+
+nav a.active {
+    background-color: hsl(173, 51%, 63%);
+    padding: 1px;
+    border-radius: 5px;
+}
