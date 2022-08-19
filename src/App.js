@@ -1,5 +1,5 @@
 import './App.css';
-import {Navigate, Route, Routes} from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 import NavBar from "./components/NavBar/NavBar";
 import Home from "./pages/Home/Home";
 import SearchMyFridge from "./pages/SearchMyFridge/SearchMyFridge";
@@ -12,6 +12,7 @@ import SignIn from "./pages/SignIn/SignIn";
 import SignUp from "./pages/SignUp/SignUp";
 import Favorites from "./pages/Favorites/Favorites";
 import RecipeOverview from "./pages/RecipeOverview/RecipeOverview";
+import RecipeDetail from "./pages/RecipeDetail/RecipeDetail";
 
 function App() {
     const {isAuth} = useContext(AuthContext);
@@ -31,7 +32,8 @@ function App() {
                 <Route path="favorites" element={<Favorites/>}/>
                 <Route path="sign-in" element={<SignIn/>}/>
                 <Route path="sign-up" element={<SignUp/>}/>
-                <Route path="recipes" element={<RecipeOverview/>}/>
+                <Route path="recipe-overview" element={<RecipeOverview/>}/>
+                <Route path="/recipe/:id" element={<RecipeDetail/>} />
             </Routes>
         </>
     )
