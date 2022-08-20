@@ -1,24 +1,49 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 import axios from "axios";
 
 function RecipeDetail() {
     const {id} = useParams();
+    const [recipe, setRecipe] = useState(null);
 
-    async function getRecipe() {
-        try {
-            const recipe = axios.get(`https://api.spoonacular.com/recipes/${id}/ingredientWidget.json?apiKey=${process.env.REACT_APP_API_KEY}`);
-            console.log(recipe);
-        } catch (e) {
-            console.error(e);
+    useEffect(() => {
+        async function getRecipe() {
+            try {
+                const recipe = await axios.get(`https://api.spoonacular.com/recipes/${id}/information?apiKey=${process.env.REACT_APP_API_KEY}`);
+                console.log(recipe);
+                setRecipe(recipe.data);
+            } catch (e) {
+                console.error(e);
+            }
         }
-    }
 
-    getRecipe();
+        getRecipe();
+    }, [])
 
     return (
         <div>
             Het receptnummer is {id}
+            {recipe &&
+                <>
+                    <h2>{recipe.title}</h2>
+                    <img src={recipe.image} alt={recipe.title}/>
+                    <p>Cooking time: {recipe.readyInMinutes}
+                        Servings: {recipe.servings}
+                    </p>
+                </>
+            }
+            {recipe && recipe.extendedIngredients.map((ingredients) => {
+                return (
+                    <ul>
+                        <li>{ingredients.original}</li>
+                    </ul>
+                )
+            })}
+            {recipe && recipe.analyzedInstructions[0].steps.map((instructions) => {
+                return (
+                    <p>{instructions.step}</p>
+                )
+            })}
         </div>
     );
 }
