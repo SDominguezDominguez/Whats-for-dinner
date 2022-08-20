@@ -4,45 +4,16 @@ import {useForm} from "react-hook-form";
 import axios from "axios";
 
 function WhatShouldIMake() {
-    const {register, handleSubmit, watch} = useForm();
-    const cuisinePreference = watch("cuisinePreference");
-    const dietRestrictionsPresent = watch("dietRestrictionsPresent");
-    const intolerancesPresent = watch("intolerancesPresent");
-    const intolerances = watch("intolerances");
+    const {register, handleSubmit} = useForm();
     const [recipes, setRecipes] = useState(null);
 
     async function onFormSubmit(data) {
         console.log(data);
-        let api = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}`
-
-        if (data.course !== "random" && cuisinePreference !== "no" && dietRestrictionsPresent !== "no" &&
-            intolerancesPresent !== "no" && intolerances === "other") {
-            api = `${api}&type=${data.course}&cuisine=${data.cuisine}&diet=${data.dietRestriction}&intolerances=${data.intolerances}&excludeIngredients=${data.intolerancesOther}&addRecipeInformation=true`;
-            console.log("everthing is specific");
-        } else if (data.course !== "random" && cuisinePreference !== "no" && dietRestrictionsPresent !== "no" &&
-            intolerancesPresent !== "no") {
-            api = `${api}&type=${data.course}&cuisine=${data.cuisine}&diet=${data.dietRestriction}&intolerances=${data.intolerances}&addRecipeInformation=true`;
-            console.log("course, cuisine, diet and intolerances are specific");
-        } else if (data.course !== "random" && cuisinePreference !== "no" && dietRestrictionsPresent !== "no") {
-            api = `${api}&type=${data.course}&cuisine=${data.cuisine}&diet=${data.dietRestriction}&addRecipeInformation=true`;
-            console.log("course, cuisine and diet are specific");
-        } else if (data.course !== "random" && cuisinePreference !== "no") {
-            api = `${api}&type=${data.course}&cuisine=${data.cuisine}&addRecipeInformation=true`;
-            console.log("course and cuisine  are specific");
-        } else if (data.course !== "random") {
-            api = `${api}&type=${data.course}&addRecipeInformation=true`;
-            console.log("course is specific");
-        } else {
-            api = `${api}&addRecipeInformation=true`
-            console.log("everything is random")
-        }
 
         try {
-
-            const recipe = await axios.get(`${api}`);
+            const recipe = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&type=${data.course}&cuisine=${data.cuisine}&diet=${data.dietRestriction}&intolerances=${data.intolerances}&addRecipeInformation=true`);
             console.log(recipe);
             setRecipes(recipe.data.results);
-
         } catch (e) {
             console.error(e);
         }
@@ -68,7 +39,7 @@ function WhatShouldIMake() {
                         <label htmlFor="course">
                             For which course would you like a recipe?
                             <select name="course" id="course" {...register("course")}>
-                                <option value="random">All courses</option>
+                                <option value="">All courses</option>
                                 <option value="main-course">Dinner</option>
                                 <option value="side-dish">Side dish</option>
                                 <option value="appetizer">Appetizer</option>
@@ -85,57 +56,32 @@ function WhatShouldIMake() {
                                 <option value="drink">Drink</option>
                             </select>
                         </label>
-                        <label htmlFor="cuisine-preference">
-                            Do you have a cuisine preference?
-                            <input
-                                {...register("cuisinePreference", {required: true})}
-                                type="radio" id="cuisine" name="cuisinePreference" value="no"
-                            /> No
-                            <input
-                                {...register("cuisinePreference", {required: true})}
-                                type="radio" id="cuisine" name="cuisinePreference" value="yes"
-                            /> Yes
-
+                        <label htmlFor="cuisine">
+                            Cuisine:
+                            <select name="cuisine-preference" id="cuisine" {...register("cuisine")}>
+                                <option value="">All cuisines</option>
+                                <option value="african">African</option>
+                                <option value="american">American</option>
+                                <option value="british">British</option>
+                                <option value="chinese">Chinese</option>
+                                <option value="european">European</option>
+                                <option value="french">French</option>
+                                <option value="greek">Greek</option>
+                                <option value="indian">Indian</option>
+                                <option value="italian">Italian</option>
+                                <option value="japanese">Japanese</option>
+                                <option value="mediterranean">Mediterranean</option>
+                                <option value="mexican">Mexican</option>
+                                <option value="spanish">Spanish</option>
+                                <option value="thai">Thai</option>
+                                <option value="vietnamese">Vietnamese</option>
+                            </select>
                         </label>
-                        {cuisinePreference === "yes" &&
-                            <label htmlFor="cuisine">
-                                Cuisine:
-                                <select name="cuisine-preference" id="cuisine" {...register("cuisine")}>
-                                    <option value="african">African</option>
-                                    <option value="american">American</option>
-                                    <option value="british">British</option>
-                                    <option value="chinese">Chinese</option>
-                                    <option value="european">European</option>
-                                    <option value="french">French</option>
-                                    <option value="greek">Greek</option>
-                                    <option value="indian">Indian</option>
-                                    <option value="italian">Italian</option>
-                                    <option value="japanese">Japanese</option>
-                                    <option value="mediterranean">Mediterranean</option>
-                                    <option value="mexican">Mexican</option>
-                                    <option value="spanish">Spanish</option>
-                                    <option value="thai">Thai</option>
-                                    <option value="vietnamese">Vietnamese</option>
-                                </select>
-                                }
-                            </label>
-                        }
 
-                        <label htmlFor="diet-restrictions-present">
-                            Do you have any diet restrictions?
-                            <input
-                                type="radio" id="diet-restriction-present" name="dietRestrictionsPresent" value="no"
-                                {...register("dietRestrictionsPresent", {required: true})}
-                            /> No
-                            <input
-                                {...register("dietRestrictionsPresent", {required: true})}
-                                type="radio" id="diet-restriction-present" name="dietRestrictionsPresent" value="yes"
-                            /> Yes
-                        </label>
-                        {dietRestrictionsPresent === "yes" &&
                             <label htmlFor="diet-restriction">
                                 Do you have any diet restrictions?
-                                <select name="diet-restriction" id="diet-restriction" {...register("dietRestriction")}>
+                                <select name="dietRestriction" id="diet-restriction" {...register("dietRestriction")}>
+                                    <option value="">No diet restrictions</option>
                                     <option value="gluten-free">Gluten free</option>
                                     <option value="ketogenic">Keto</option>
                                     <option value="vegetarian">Vegetarian</option>
@@ -144,24 +90,11 @@ function WhatShouldIMake() {
                                     <option value="paleo">Paleo</option>
                                 </select>
                             </label>
-                        }
 
-                        <label htmlFor="intolerances-present">
-                            Do you have any intolerances?
-                            <input
-                                {...register("intolerancesPresent", {required: true})}
-                                type="radio" id="intolerances-present" name="intolerancesPresent" value="no"
-                            /> No
-                            <input
-                                {...register("intolerancesPresent", {required: true})}
-                                type="radio" id="intolerances-present" name="intolerancesPresent" value="yes"
-                            /> Yes
-                        </label>
-                        {intolerancesPresent === "yes" &&
-                            <>
                                 <label htmlFor="intolerances">
-                                    What intolerances do you have?
+                                    Do you have any intolerances?
                                     <select name="intolerances" id="intolerances" {...register("intolerances")}>
+                                        <option value="">No intolerances</option>
                                         <option value="dairy">Dairy</option>
                                         <option value="egg">Egg</option>
                                         <option value="gluten">Gluten</option>
@@ -169,17 +102,9 @@ function WhatShouldIMake() {
                                         <option value="peanut">Peanuts</option>
                                         <option value="seafood">Seafood</option>
                                         <option value="shellfish">Shellfish</option>
-                                        <option value="other">Other</option>
                                     </select>
                                 </label>
-                                {intolerances === "other" &&
-                                    <input
-                                        type="text"
-                                        {...register("intolerancesOther")}
-                                    />
-                                }
-                            </>
-                        }
+
                         <button type="submit">Get my recipe</button>
                     </form>
                 </section>
@@ -188,7 +113,7 @@ function WhatShouldIMake() {
                     {recipes && recipes.map((recipe) => {
                         return (
                             <Link to={`/recipe/${recipe.id}`} key={recipe.id}>
-                                <article>
+                                <article key={recipe.title}>
                                     <h4>{recipe.title}</h4>
                                     <img src={recipe.image} alt={recipe.title}/>
                                     <ul>
