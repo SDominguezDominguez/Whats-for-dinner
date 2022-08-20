@@ -3,11 +3,12 @@ import './Home.css'
 import SearchBar from "../../components/SearchBar/SearchBar";
 import image1 from '../../../../whats-for-dinner/src/assets/funnyImg.jpg'
 import axios from "axios";
+import {Link} from "react-router-dom";
 
 function Home() {
     const [randomRecipe, setRandomRecipe] = useState(null);
     const [popularRecipes, setPopularRecipes] = useState(null);
-    const [quickRecipes, setQuickRecipes] = useState(null)
+    const [quickRecipes, setQuickRecipes] = useState(null);
 
     async function getRandomRecipe() {
         try {
@@ -22,7 +23,7 @@ function Home() {
     useEffect(() => {
         async function getPopularRecipes() {
             try {
-                const popularRecipe = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&type="main course"&sort=popularity&number=10`);
+                const popularRecipe = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&type="main course"&sort=popularity&number=10&addRecipeInformation=true`);
                 // console.log(popularRecipe.data.results);
                 setPopularRecipes(popularRecipe.data.results);
             } catch (e) {
@@ -32,7 +33,7 @@ function Home() {
 
         async function getQuickRecipes() {
             try {
-                const quickRecipe = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&type="main course"&sort=time&number=10`);
+                const quickRecipe = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&type="main course"&sort=time&number=10&addRecipeInformation=true`);
                 console.log(quickRecipe.data.results);
                 setQuickRecipes(quickRecipe.data.results);
             } catch (e) {
@@ -68,8 +69,13 @@ function Home() {
                             <>
                                 <h1>{randomRecipe.title}</h1>
                                 <img src={randomRecipe.image} alt="recipe"/>
-                                <p>Cooking time: {randomRecipe.readyInMinutes} minutes</p>
-                                <button>Make recipe</button>
+                                <ul>
+                                    <li>🕓{randomRecipe.readyInMinutes} min</li>
+                                    <li>👤 {randomRecipe.servings} servings</li>
+                                </ul>
+                                <Link to={`recipe/${randomRecipe.id}`}>
+                                    <button>Make recipe</button>
+                                </Link>
                             </>
                         }
                     </article>
@@ -79,8 +85,14 @@ function Home() {
                     {popularRecipes && popularRecipes.map((popularRecipe) => {
                         return (
                             <article key={popularRecipe.title}>
-                                <h4>{popularRecipe.title}</h4>
-                                <img src={popularRecipe.image} alt="recipe"/>
+                                <Link to={`recipe/${popularRecipe.id}`}>
+                                    <img src={popularRecipe.image} alt="recipe"/>
+                                    <h4>{popularRecipe.title}</h4>
+                                    <ul>
+                                        <li>🕓{popularRecipe.readyInMinutes} min</li>
+                                        <li>👤 {popularRecipe.servings} servings</li>
+                                    </ul>
+                                </Link>
                             </article>
                         )
                     })}
@@ -90,8 +102,14 @@ function Home() {
                     {quickRecipes && quickRecipes.map((quickRecipe) => {
                         return (
                             <article key={quickRecipe.title}>
-                                <h4>{quickRecipe.title}</h4>
-                                <img src={quickRecipe.image} alt="recipe"/>
+                                <Link to={`recipe/${quickRecipe.id}`}>
+                                    <h4>{quickRecipe.title}</h4>
+                                    <img src={quickRecipe.image} alt="recipe"/>
+                                    <ul>
+                                        <li>🕓{quickRecipe.readyInMinutes} min</li>
+                                        <li>👤 {quickRecipe.servings} servings</li>
+                                    </ul>
+                                </Link>
                             </article>
                         )
                     })}

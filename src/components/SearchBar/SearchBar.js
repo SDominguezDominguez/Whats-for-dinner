@@ -1,9 +1,12 @@
 import React, {useState} from 'react';
 import axios from "axios";
 import './SearchBar.css'
+import {useNavigate} from "react-router-dom";
 
 function SearchBar({styling, searchText}) {
     const [query, setQuery] = useState("");
+    const [recipes, setRecipes] = useState(null);
+    const navigate = useNavigate();
 
     let css;
 
@@ -21,10 +24,12 @@ function SearchBar({styling, searchText}) {
 
         try {
             const fetchSearchResult = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&query=${query}`);
-            console.log(fetchSearchResult);
+            setRecipes(fetchSearchResult.data);
         } catch (e) {
             console.error(e);
         }
+        console.log(recipes);
+        navigate("/recipe-overview");
     }
 
     return (
