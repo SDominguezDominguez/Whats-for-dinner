@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Link} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import axios from "axios";
@@ -9,6 +9,7 @@ function WhatShouldIMake() {
     const dietRestrictionsPresent = watch("dietRestrictionsPresent");
     const intolerancesPresent = watch("intolerancesPresent");
     const intolerances = watch("intolerances");
+    const [recipes, setRecipes] = useState(null);
 
     async function onFormSubmit(data) {
         console.log(data);
@@ -16,23 +17,23 @@ function WhatShouldIMake() {
 
         if (data.course !== "random" && cuisinePreference !== "no" && dietRestrictionsPresent !== "no" &&
             intolerancesPresent !== "no" && intolerances === "other") {
-            api = `${api}&type=${data.course}&cuisine=${data.cuisine}&diet=${data.dietRestriction}&intolerances=${data.intolerances}&excludeIngredients=${data.intolerancesOther}`;
+            api = `${api}&type=${data.course}&cuisine=${data.cuisine}&diet=${data.dietRestriction}&intolerances=${data.intolerances}&excludeIngredients=${data.intolerancesOther}&addRecipeInformation=true`;
             console.log("everthing is specific");
         } else if (data.course !== "random" && cuisinePreference !== "no" && dietRestrictionsPresent !== "no" &&
             intolerancesPresent !== "no") {
-            api = `${api}&type=${data.course}&cuisine=${data.cuisine}&diet=${data.dietRestriction}&intolerances=${data.intolerances}`;
+            api = `${api}&type=${data.course}&cuisine=${data.cuisine}&diet=${data.dietRestriction}&intolerances=${data.intolerances}&addRecipeInformation=true`;
             console.log("course, cuisine, diet and intolerances are specific");
         } else if (data.course !== "random" && cuisinePreference !== "no" && dietRestrictionsPresent !== "no") {
-            api = `${api}&type=${data.course}&cuisine=${data.cuisine}&diet=${data.dietRestriction}`;
+            api = `${api}&type=${data.course}&cuisine=${data.cuisine}&diet=${data.dietRestriction}&addRecipeInformation=true`;
             console.log("course, cuisine and diet are specific");
         } else if (data.course !== "random" && cuisinePreference !== "no") {
-            api = `${api}&type=${data.course}&cuisine=${data.cuisine}`;
+            api = `${api}&type=${data.course}&cuisine=${data.cuisine}&addRecipeInformation=true`;
             console.log("course and cuisine  are specific");
         } else if (data.course !== "random") {
-            api = `${api}&type=${data.course}`;
+            api = `${api}&type=${data.course}&addRecipeInformation=true`;
             console.log("course is specific");
         } else {
-            api = `${api}`
+            api = `${api}&addRecipeInformation=true`
             console.log("everything is random")
         }
 
@@ -40,6 +41,7 @@ function WhatShouldIMake() {
 
             const recipe = await axios.get(`${api}`);
             console.log(recipe);
+            setRecipes(recipe.data.results);
 
         } catch (e) {
             console.error(e);
@@ -61,7 +63,7 @@ function WhatShouldIMake() {
                     </p>
                 </article>
                 <section>
-                    <h2>Give me a recipe!</h2>
+                    <h2>Give me a recipe</h2>
                     <form onSubmit={handleSubmit(onFormSubmit)}>
                         <label htmlFor="course">
                             For which course would you like a recipe?
@@ -99,7 +101,6 @@ function WhatShouldIMake() {
                             <label htmlFor="cuisine">
                                 Cuisine:
                                 <select name="cuisine-preference" id="cuisine" {...register("cuisine")}>
-                                    <option value="random">All cuisines</option>
                                     <option value="african">African</option>
                                     <option value="american">American</option>
                                     <option value="british">British</option>
@@ -115,7 +116,6 @@ function WhatShouldIMake() {
                                     <option value="spanish">Spanish</option>
                                     <option value="thai">Thai</option>
                                     <option value="vietnamese">Vietnamese</option>
-                                    {/*If else function, if there's a recipe, render it, else give a notice to choose another cuisine */}
                                 </select>
                                 }
                             </label>
@@ -136,7 +136,6 @@ function WhatShouldIMake() {
                             <label htmlFor="diet-restriction">
                                 Do you have any diet restrictions?
                                 <select name="diet-restriction" id="diet-restriction" {...register("dietRestriction")}>
-                                    <option value="">No diet restrictions</option>
                                     <option value="gluten-free">Gluten free</option>
                                     <option value="ketogenic">Keto</option>
                                     <option value="vegetarian">Vegetarian</option>
@@ -185,8 +184,24 @@ function WhatShouldIMake() {
                     </form>
                 </section>
                 <article>
-                    <h2>recipe</h2>
-                    {/*render recipe here*/}
+                    <h2>Recipes</h2>
+                    {recipes && recipes.map((recipe) => {
+                        return (
+                            <Link to={`/recipe/${recipe.id}`} key={recipe.id}>
+                                <article>
+                                    <h4>{recipe.title}</h4>
+                                    <img src={recipe.image} alt={recipe.title}/>
+                                    <ul>
+                                        <li>🕓{recipe.readyInMinutes} min</li>
+                                        <li>👤 {recipe.servings} servings</li>
+                                        {recipe.veryPopular === true &&
+                                            <li>❤ Popular recipe</li>
+                                        }
+                                    </ul>
+                                </article>
+                            </Link>
+                        )
+                    })}
                 </article>
             </main>
         </>
