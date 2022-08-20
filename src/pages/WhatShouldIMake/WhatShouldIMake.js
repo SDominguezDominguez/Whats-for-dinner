@@ -14,14 +14,36 @@ function WhatShouldIMake() {
         console.log(data);
         let api = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}`
 
-            try {
+        if (data.course !== "random" && cuisinePreference !== "no" && dietRestrictionsPresent !== "no" &&
+            intolerancesPresent !== "no" && intolerances === "other") {
+            api = `${api}&type=${data.course}&cuisine=${data.cuisine}&diet=${data.dietRestriction}&intolerances=${data.intolerances}&excludeIngredients=${data.intolerancesOther}`;
+            console.log("everthing is specific");
+        } else if (data.course !== "random" && cuisinePreference !== "no" && dietRestrictionsPresent !== "no" &&
+            intolerancesPresent !== "no") {
+            api = `${api}&type=${data.course}&cuisine=${data.cuisine}&diet=${data.dietRestriction}&intolerances=${data.intolerances}`;
+            console.log("course, cuisine, diet and intolerances are specific");
+        } else if (data.course !== "random" && cuisinePreference !== "no" && dietRestrictionsPresent !== "no") {
+            api = `${api}&type=${data.course}&cuisine=${data.cuisine}&diet=${data.dietRestriction}`;
+            console.log("course, cuisine and diet are specific");
+        } else if (data.course !== "random" && cuisinePreference !== "no") {
+            api = `${api}&type=${data.course}&cuisine=${data.cuisine}`;
+            console.log("course and cuisine  are specific");
+        } else if (data.course !== "random") {
+            api = `${api}&type=${data.course}`;
+            console.log("course is specific");
+        } else {
+            api = `${api}`
+            console.log("everything is random")
+        }
 
-                const recipe = await axios.get(`${api}`);
-                console.log(recipe);
+        try {
 
-            } catch (e) {
-                console.error(e);
-            }
+            const recipe = await axios.get(`${api}`);
+            console.log(recipe);
+
+        } catch (e) {
+            console.error(e);
+        }
     }
 
     return (
@@ -65,10 +87,12 @@ function WhatShouldIMake() {
                             Do you have a cuisine preference?
                             <input
                                 {...register("cuisinePreference", {required: true})}
-                                type="radio" id="cuisine" name="cuisinePreference" value="no"/> No
+                                type="radio" id="cuisine" name="cuisinePreference" value="no"
+                            /> No
                             <input
                                 {...register("cuisinePreference", {required: true})}
-                                type="radio" id="cuisine" name="cuisinePreference" value="yes"/> Yes
+                                type="radio" id="cuisine" name="cuisinePreference" value="yes"
+                            /> Yes
 
                         </label>
                         {cuisinePreference === "yes" &&
