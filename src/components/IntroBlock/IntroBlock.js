@@ -1,6 +1,6 @@
 import React from 'react';
 
-function IntroBlock({information, pageTitle, children}) {
+function IntroBlock({pageTitle, information, children}) {
     return (
         <>
             <article className="intro-block">

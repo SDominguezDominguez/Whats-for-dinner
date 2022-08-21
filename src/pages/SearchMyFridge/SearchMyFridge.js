@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {useForm} from "react-hook-form";
 import axios from "axios";
 import {Link} from "react-router-dom";
+import IntroBlock from "../../components/IntroBlock/IntroBlock";
 
 function SearchMyFridge() {
     const {register, handleSubmit} = useForm();
@@ -20,14 +21,17 @@ function SearchMyFridge() {
     return (
         <>
             <main>
-                <h2>Search your fridge</h2>
-                <p>Ever wondered what recipes you can cook with the ingredients you have in your fridge or pantry? Find
+                <IntroBlock
+                    pageTitle="Search your fridge"
+                    information="Ever wondered what recipes you can cook with the ingredients you have in your fridge or pantry? Find
                     recipes that use as many of the given ingredients as possible and require as few additional
-                    ingredients as possible. </p>
-                <p>You can include ingredients to find the recipes you are looking for. Want to involve multiple
-                    ingredients? You can also select a dish type
-                    and time limit to further specify the results.</p>
+                    ingredients as possible."
+                    />
+
                 <form onSubmit={handleSubmit(onFormSubmit)}>
+                    <p>You can include ingredients to find the recipes you are looking for. Want to involve multiple
+                        ingredients? You can also select a dish type
+                        and time limit to further specify the results.</p>
                     <label htmlFor="searchQuery">
                         <input type="text" id="searchQuery" {...register("searchQuery")}/>
                     </label>

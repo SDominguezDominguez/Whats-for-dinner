@@ -2,6 +2,7 @@ import React from 'react';
 import {useForm} from "react-hook-form";
 import {Link} from "react-router-dom";
 import axios from "axios";
+import IntroBlock from "../../components/IntroBlock/IntroBlock";
 
 function SignUp() {
     const {register, handleSubmit} = useForm();
@@ -26,7 +27,11 @@ function SignUp() {
 
     return (
         <div>
-            <h1>Registreren</h1>
+            <IntroBlock
+                pageTitle="Register"
+                information="Save your favorite recipes and make your own week menu"
+                />
+
             <form onSubmit={handleSubmit(handleFormSubmit)}>
                 <label htmlFor="username-field">
                     Gebruikersnaam:

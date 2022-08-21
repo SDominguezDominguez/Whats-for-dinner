@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import {Link} from "react-router-dom";
+import IntroBlock from "../../components/IntroBlock/IntroBlock";
 
 function RecipeOverview() {
     const [recipes, setRecipes] = useState(null);
@@ -47,6 +48,11 @@ function RecipeOverview() {
 
     return (
         <>
+            <IntroBlock
+                pageTitle="Recipes"
+                information="Browse through all our recipes"
+            />
+
             <h1>Recipes</h1>
             {recipes && recipes.results.map((recipe) => {
                 return (

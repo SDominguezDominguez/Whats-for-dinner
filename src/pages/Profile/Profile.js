@@ -2,6 +2,7 @@ import React, {useContext} from 'react';
 import {useForm} from "react-hook-form";
 import axios from "axios";
 import {AuthContext} from "../../context/AuthContext";
+import IntroBlock from "../../components/IntroBlock/IntroBlock";
 
 function Profile() {
     const {register, handleSubmit} = useForm();
@@ -27,7 +28,11 @@ function Profile() {
 
     return (
         <div>
-            <h1>Profielpagina</h1>
+            <IntroBlock
+                pageTitle="Profile information"
+                information="Here you can find your username and e-mailadres. Want to change your e-mail or password? You can do that here!"
+                />
+
             <section>
                 <h2>Gegevens</h2>
                 <p>Gebruikersnaam: {username}</p>

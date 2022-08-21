@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {useForm} from "react-hook-form";
 import axios from "axios";
 import {Link} from "react-router-dom";
+import IntroBlock from "../../components/IntroBlock/IntroBlock";
 
 function WeekMenu() {
     const {register, handleSubmit} = useForm();
@@ -21,7 +22,11 @@ function WeekMenu() {
         <>
             <main>
                 <section>
-                    <h2>Make a week menu</h2>
+                    <IntroBlock
+                        pageTitle="Make a week menu"
+                        information="Choose the amount of days you would like a dinner menu for. Our website will make a week menu for you and save it. Want to review your week menu? Just come back to this page."
+                    />
+
                     <form onSubmit={handleSubmit(onFormSubmit)}>
                         <label htmlFor="amount-of-days">
                             Amount of days
