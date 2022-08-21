@@ -3,6 +3,7 @@ import {useForm} from "react-hook-form";
 import {Link} from "react-router-dom";
 import axios from "axios";
 import {AuthContext} from "../../context/AuthContext";
+import IntroBlock from "../../components/IntroBlock/IntroBlock";
 
 function SignIn() {
     const {login} = useContext(AuthContext);
@@ -35,9 +36,13 @@ function SignIn() {
 
     return (
         <>
-            <h1>Inloggen</h1>
+            <IntroBlock
+                pageTitle="Sign in"
+                information="Welcome back!"
+            />
 
             <form onSubmit={handleSubmit(makeLogInRequest)}>
+                <p>Glad you're back. Enter your email address to proceed.</p>
                 <label htmlFor="username-field">
                     Gebruikersnaam:
                     <input

@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import {Link} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import axios from "axios";
+import IntroBlock from "../../components/IntroBlock/IntroBlock";
+import GetRecipe from "../../components/GetRecipe/GetRecipe";
 
 function WhatShouldIMake() {
     const {register, handleSubmit} = useForm();
@@ -22,17 +24,19 @@ function WhatShouldIMake() {
     return (
         <>
             <main>
-                <h2>Wat should I make?</h2>
-                <article>
-                    <p>On occasion we all have a hard time to decide what we should eat. With 3 meals a day and 365 days
+                <IntroBlock
+                    pageTitle="What should I make?"
+                    information="On occasion we all have a hard time to decide what we should eat. With 3 meals a day and 365 days
                         a year that's not a surprise.
                         So let us help you decide what to eat for your next meal. No matter if it's for breakfast,
                         lunch, dinner or maybe just a snack your looking for, we got a lot of different recipes.
-                        You can let us pick a random recipe, based on some preferences or <Link
-                            to={"/recipe-overview"}
-                        >search all our recipes.</Link>
-                    </p>
-                </article>
+                        You can let us pick a random recipe, based on some preferences"
+                >
+                    <p>Rather browse through all of our recipes? <Link
+                        to={"/recipe-overview"}
+                    >Search all our recipes here.</Link></p>
+                </IntroBlock>
+
                 <section>
                     <h2>Give me a recipe</h2>
                     <form onSubmit={handleSubmit(onFormSubmit)}>
@@ -78,56 +82,39 @@ function WhatShouldIMake() {
                             </select>
                         </label>
 
-                            <label htmlFor="diet-restriction">
-                                Do you have any diet restrictions?
-                                <select name="dietRestriction" id="diet-restriction" {...register("dietRestriction")}>
-                                    <option value="">No diet restrictions</option>
-                                    <option value="gluten-free">Gluten free</option>
-                                    <option value="ketogenic">Keto</option>
-                                    <option value="vegetarian">Vegetarian</option>
-                                    <option value="vegan">Vegan</option>
-                                    <option value="pescetarian">Pescetarian</option>
-                                    <option value="paleo">Paleo</option>
-                                </select>
-                            </label>
+                        <label htmlFor="diet-restriction">
+                            Do you have any diet restrictions?
+                            <select name="dietRestriction" id="diet-restriction" {...register("dietRestriction")}>
+                                <option value="">No diet restrictions</option>
+                                <option value="gluten-free">Gluten free</option>
+                                <option value="ketogenic">Keto</option>
+                                <option value="vegetarian">Vegetarian</option>
+                                <option value="vegan">Vegan</option>
+                                <option value="pescetarian">Pescetarian</option>
+                                <option value="paleo">Paleo</option>
+                            </select>
+                        </label>
 
-                                <label htmlFor="intolerances">
-                                    Do you have any intolerances?
-                                    <select name="intolerances" id="intolerances" {...register("intolerances")}>
-                                        <option value="">No intolerances</option>
-                                        <option value="dairy">Dairy</option>
-                                        <option value="egg">Egg</option>
-                                        <option value="gluten">Gluten</option>
-                                        <option value="grain">Grain</option>
-                                        <option value="peanut">Peanuts</option>
-                                        <option value="seafood">Seafood</option>
-                                        <option value="shellfish">Shellfish</option>
-                                    </select>
-                                </label>
+                        <label htmlFor="intolerances">
+                            Do you have any intolerances?
+                            <select name="intolerances" id="intolerances" {...register("intolerances")}>
+                                <option value="">No intolerances</option>
+                                <option value="dairy">Dairy</option>
+                                <option value="egg">Egg</option>
+                                <option value="gluten">Gluten</option>
+                                <option value="grain">Grain</option>
+                                <option value="peanut">Peanuts</option>
+                                <option value="seafood">Seafood</option>
+                                <option value="shellfish">Shellfish</option>
+                            </select>
+                        </label>
 
                         <button type="submit">Get my recipe</button>
                     </form>
                 </section>
-                <article>
-                    <h2>Recipes</h2>
-                    {recipes && recipes.map((recipe) => {
-                        return (
-                            <Link to={`/recipe/${recipe.id}`} key={recipe.id}>
-                                <article key={recipe.title}>
-                                    <h4>{recipe.title}</h4>
-                                    <img src={recipe.image} alt={recipe.title}/>
-                                    <ul>
-                                        <li>🕓{recipe.readyInMinutes} min</li>
-                                        <li>👤 {recipe.servings} servings</li>
-                                        {recipe.veryPopular === true &&
-                                            <li>❤ Popular recipe</li>
-                                        }
-                                    </ul>
-                                </article>
-                            </Link>
-                        )
-                    })}
-                </article>
+                <section>
+                    <GetRecipe recipeType={recipes} />
+                </section>
             </main>
         </>
     );

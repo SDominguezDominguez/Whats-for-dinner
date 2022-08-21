@@ -55,7 +55,7 @@ function NavBar() {
                     <NavLink to="/week-menu">
                         <li>Week Menu</li>
                     </NavLink>
-                    <NavLink to="/recipes">
+                    <NavLink to="/recipe-overview">
                         <li>Recipes</li>
                     </NavLink>
 
