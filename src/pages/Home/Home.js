@@ -4,6 +4,8 @@ import SearchBar from "../../components/SearchBar/SearchBar";
 import image1 from '../../../../whats-for-dinner/src/assets/funnyImg.jpg'
 import axios from "axios";
 import {Link} from "react-router-dom";
+import IntroBlock from "../../components/IntroBlock/IntroBlock";
+import GetRecipe from "../../components/GetRecipe/GetRecipe";
 
 function Home() {
     const [randomRecipe, setRandomRecipe] = useState(null);
@@ -55,15 +57,15 @@ function Home() {
                     />
                 </section>
                 <section>
-                    <article className="random-recipe-intro">
+                    <IntroBlock
+                        information={`It's the most frequently asked question. Do you know what's for dinner today?
+                            Don't worry, we are happy to help you. Let us choose a random recipe for you!`}
+                        pageTitle="What's for dinner tonight?"
+                    >
                         <img src={image1} alt="funny what's for dinner"/>
-                        <p>
-                            It's the most frequently asked question: "What's for dinner tonight?"
-                            Do you know what's for dinner today?
-                            Don't worry, we are happy to help you. Let us choose a random recipe for you!
-                        </p>
                         <button type="button" onClick={getRandomRecipe}>Get a random recipe</button>
-                    </article>
+                    </IntroBlock>
+
                     <article className="random-recipe">
                         {randomRecipe &&
                             <>
@@ -82,37 +84,11 @@ function Home() {
                 </section>
                 <section>
                     <h2>Popular recipes</h2>
-                    {popularRecipes && popularRecipes.map((popularRecipe) => {
-                        return (
-                            <article key={popularRecipe.title}>
-                                <Link to={`recipe/${popularRecipe.id}`}>
-                                    <img src={popularRecipe.image} alt="recipe"/>
-                                    <h4>{popularRecipe.title}</h4>
-                                    <ul>
-                                        <li>🕓{popularRecipe.readyInMinutes} min</li>
-                                        <li>👤 {popularRecipe.servings} servings</li>
-                                    </ul>
-                                </Link>
-                            </article>
-                        )
-                    })}
+                    <GetRecipe recipeType={popularRecipes} />
                 </section>
                 <section>
                     <h2>Quick recipes</h2>
-                    {quickRecipes && quickRecipes.map((quickRecipe) => {
-                        return (
-                            <article key={quickRecipe.title}>
-                                <Link to={`recipe/${quickRecipe.id}`}>
-                                    <h4>{quickRecipe.title}</h4>
-                                    <img src={quickRecipe.image} alt="recipe"/>
-                                    <ul>
-                                        <li>🕓{quickRecipe.readyInMinutes} min</li>
-                                        <li>👤 {quickRecipe.servings} servings</li>
-                                    </ul>
-                                </Link>
-                            </article>
-                        )
-                    })}
+                    <GetRecipe recipeType={quickRecipes} />
                 </section>
             </main>
         </>
