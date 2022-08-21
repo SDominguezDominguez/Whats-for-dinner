@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {useForm} from "react-hook-form";
 import axios from "axios";
-import {Link} from "react-router-dom";
 import IntroBlock from "../../components/IntroBlock/IntroBlock";
+import GetRecipe from "../../components/GetRecipe/GetRecipe";
 
 function WeekMenu() {
     const {register, handleSubmit} = useForm();
@@ -44,25 +44,7 @@ function WeekMenu() {
                     </form>
                 </section>
                 <section>
-                    <article>
-                        {recipes && recipes.map((recipe) => {
-                            return (
-                                <Link to={`/recipe/${recipe.id}`} key={recipe.id}>
-                                    <article key={recipe.title}>
-                                        <h4>{recipe.title}</h4>
-                                        <img src={recipe.image} alt={recipe.title}/>
-                                        <ul>
-                                            <li>🕓{recipe.readyInMinutes} min</li>
-                                            <li>👤 {recipe.servings} servings</li>
-                                            {recipe.veryPopular === true &&
-                                                <li>❤ Popular recipe</li>
-                                            }
-                                        </ul>
-                                    </article>
-                                </Link>
-                            )
-                        })}
-                    </article>
+                    <GetRecipe recipeType={recipes} />
                 </section>
             </main>
         </>

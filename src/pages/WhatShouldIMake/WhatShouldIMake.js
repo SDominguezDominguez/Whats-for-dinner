@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import axios from "axios";
 import IntroBlock from "../../components/IntroBlock/IntroBlock";
+import GetRecipe from "../../components/GetRecipe/GetRecipe";
 
 function WhatShouldIMake() {
     const {register, handleSubmit} = useForm();
@@ -111,26 +112,9 @@ function WhatShouldIMake() {
                         <button type="submit">Get my recipe</button>
                     </form>
                 </section>
-                <article>
-                    <h2>Recipes</h2>
-                    {recipes && recipes.map((recipe) => {
-                        return (
-                            <Link to={`/recipe/${recipe.id}`} key={recipe.id}>
-                                <article key={recipe.title}>
-                                    <h4>{recipe.title}</h4>
-                                    <img src={recipe.image} alt={recipe.title}/>
-                                    <ul>
-                                        <li>🕓{recipe.readyInMinutes} min</li>
-                                        <li>👤 {recipe.servings} servings</li>
-                                        {recipe.veryPopular === true &&
-                                            <li>❤ Popular recipe</li>
-                                        }
-                                    </ul>
-                                </article>
-                            </Link>
-                        )
-                    })}
-                </article>
+                <section>
+                    <GetRecipe recipeType={recipes} />
+                </section>
             </main>
         </>
     );
