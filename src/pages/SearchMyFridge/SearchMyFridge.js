@@ -3,6 +3,8 @@ import {useForm} from "react-hook-form";
 import axios from "axios";
 import IntroBlock from "../../components/IntroBlock/IntroBlock";
 import GetRecipe from "../../components/GetRecipe/GetRecipe";
+import courses from "../../helpers/data/courses";
+import cookingTimes from "../../helpers/data/cookingTimes";
 
 function SearchMyFridge() {
     const {register, handleSubmit} = useForm();
@@ -41,20 +43,11 @@ function SearchMyFridge() {
                     <label htmlFor="course">
                         <select name="course" id="course" {...register("course")}>
                             <option value="">All courses</option>
-                            <option value="main course">Dinner</option>
-                            <option value="side-dish">Side dish</option>
-                            <option value="appetizer">Appetizer</option>
-                            <option value="salad">Salad</option>
-                            <option value="bread">Bread</option>
-                            <option value="breakfast">Breakfast</option>
-                            <option value="dessert">Dessert</option>
-                            <option value="soup">Soup</option>
-                            <option value="beverage">Beverage</option>
-                            <option value="sauce">Sauce</option>
-                            <option value="marinade">Marinade</option>
-                            <option value="fingerfood">Fingerfood</option>
-                            <option value="snack">Snack</option>
-                            <option value="drink">Drink</option>
+                            {courses.map((course) => {
+                                return (
+                                    <option value={course}>{course}</option>
+                                )
+                            })}
                         </select>
                     </label>
                     <label htmlFor="maxPrepTime">
@@ -62,12 +55,11 @@ function SearchMyFridge() {
                         <select
                             name="maxPrepTime" id="maxPrepTime" {...register("maxPrepTime")}>
                             <option value="9999">No preference</option>
-                            <option value="15">15 minutes</option>
-                            <option value="30">30 minutes</option>
-                            <option value="45">45 minutes</option>
-                            <option value="60">60 minutes</option>
-                            <option value="90">90 minutes</option>
-                            <option value="120">120 minutes</option>
+                            {cookingTimes.map((cookingTime) => {
+                                return (
+                                    <option value={cookingTime}>{cookingTime}</option>
+                                )
+                            })}
                         </select>
                     </label>
                     <button type="submit">Search recipes</button>
