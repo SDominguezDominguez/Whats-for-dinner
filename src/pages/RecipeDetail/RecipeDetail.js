@@ -25,23 +25,25 @@ function RecipeDetail() {
             Het receptnummer is {id}
             {recipe &&
                 <>
-                    <h2>{recipe.title}</h2>
-                    <img src={recipe.image} alt={recipe.title}/>
-                    <p>Cooking time: {recipe.readyInMinutes}
-                        Servings: {recipe.servings}
-                    </p>
+                    <article key={recipe.id}>
+                        <h2>{recipe.title}</h2>
+                        <img src={recipe.image} alt={recipe.title}/>
+                        <p>Cooking time: {recipe.readyInMinutes}
+                            Servings: {recipe.servings}
+                        </p>
+                    </article>
                 </>
             }
-            {recipe && recipe.extendedIngredients.map((ingredients) => {
-                return (
-                    <ul>
-                        <li>{ingredients.original}</li>
-                    </ul>
-                )
-            })}
+            <ul>
+                {recipe && recipe.extendedIngredients.map((ingredients) => {
+                    return (
+                        <li key={ingredients.name}>{ingredients.original}</li>
+                    )
+                })}
+            </ul>
             {recipe && recipe.analyzedInstructions[0].steps.map((instructions) => {
                 return (
-                    <p>{instructions.step}</p>
+                    <p key={instructions.number}>{instructions.step}</p>
                 )
             })}
         </div>

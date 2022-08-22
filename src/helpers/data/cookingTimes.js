@@ -6,3 +6,5 @@ const cookingTimes = [
     90,
     120
 ]
+
+export default cookingTimes

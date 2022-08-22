@@ -45,7 +45,7 @@ function SearchMyFridge() {
                             <option value="">All courses</option>
                             {courses.map((course) => {
                                 return (
-                                    <option value={course}>{course}</option>
+                                    <option value={course} key={course}>{course}</option>
                                 )
                             })}
                         </select>
@@ -57,7 +57,7 @@ function SearchMyFridge() {
                             <option value="9999">No preference</option>
                             {cookingTimes.map((cookingTime) => {
                                 return (
-                                    <option value={cookingTime}>{cookingTime}</option>
+                                    <option value={cookingTime} key={cookingTime}>{cookingTime}</option>
                                 )
                             })}
                         </select>
