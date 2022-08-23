@@ -1,0 +1,45 @@
+.get-recipes {
+    display: flex;
+    width: 300px;
+    border: 4px solid hsl(173, 51%, 53%);
+    border-radius: 10px;
+    margin: 10px;
+    flex-wrap: wrap;
+    padding: 10px;
+}
+
+.get-recipes:hover {
+    background-color: hsl(173, 51%, 63%);
+    border-radius: 10px;
+}
+
+.get-recipes li{
+    margin: 10px;
+}
+
+.get-recipes h3 {
+    display: flex;
+    justify-content: center;
+}
+
+.get-recipes a {
+    text-decoration: none;
+    color: black;
+}
+
+.get-recipes button {
+    background-color: hsl(173, 51%, 63%);
+    border-radius: 5px;
+    padding: 10px;
+    border: none;
+}
+
+.get-recipes:hover button {
+    background-color: hsl(173, 51%, 43%);
+    border-radius: 10px;
+}
+
+.get-recipes ul {
+    display: flex;
+    flex-wrap: wrap;
+}

@@ -53,7 +53,7 @@ function Home() {
                         searchText="Find your recipe here"
                     />
                 </section>
-                <section>
+                <section className="intro-home">
                     <IntroBlock
                         information={`It's the most frequently asked question. Do you know what's for dinner today?
                             Don't worry, we are happy to help you. Let us choose a random recipe for you!`}
@@ -63,10 +63,10 @@ function Home() {
                         <button type="button" onClick={getRandomRecipe}>Get a random recipe</button>
                     </IntroBlock>
 
-                    <article className="random-recipe">
-                        {randomRecipe &&
-                            <>
-                                <h1>{randomRecipe.title}</h1>
+                    {randomRecipe &&
+                        <>
+                            <article className="get-recipes">
+                                <h3>{randomRecipe.title}</h3>
                                 <img src={randomRecipe.image} alt="recipe"/>
                                 <ul>
                                     <li>🕓{randomRecipe.readyInMinutes} min</li>
@@ -75,17 +75,21 @@ function Home() {
                                 <Link to={`recipe/${randomRecipe.id}`}>
                                     <button>Make recipe</button>
                                 </Link>
-                            </>
-                        }
-                    </article>
+                            </article>
+                        </>
+                    }
                 </section>
                 <section>
                     <h2>Popular recipes</h2>
-                    <GetRecipe recipeType={popularRecipes} />
+                    <div className="recipes">
+                        <GetRecipe recipeType={popularRecipes}/>
+                    </div>
                 </section>
                 <section>
                     <h2>Quick recipes</h2>
-                    <GetRecipe recipeType={quickRecipes} />
+                    <div className="recipes">
+                        <GetRecipe recipeType={quickRecipes}/>
+                    </div>
                 </section>
             </main>
         </>

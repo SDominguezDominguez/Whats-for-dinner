@@ -1,13 +1,8 @@
-.random-recipe {
+.intro-home {
     display: flex;
-    flex-direction: column;
-    align-items: center;
 }
 
-.random-recipe h1 {
-    font-size: 30px;
-}
-
-.random-recipe p {
+.recipes {
     display: flex;
+    flex-wrap: wrap;
 }
