@@ -1,28 +1,3 @@
-.random-recipe-intro {
-    display: flex;
-    justify-content: space-around;
-    font-size: 40px;
-    padding: 10px
-}
-
-.random-recipe-intro img {
-    height: 400px;
-    margin-right: 15px;
-}
-
-.random-recipe-intro button {
-    display: flex;
-    align-items: center;
-    align-self: flex-end;
-    height: 30px;
-}
-
-.random-recipe-intro p {
-    display: flex;
-    width: 60%;
-    align-items: center;
-}
-
 .random-recipe {
     display: flex;
     flex-direction: column;

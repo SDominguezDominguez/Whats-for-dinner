@@ -33,11 +33,11 @@ function WhatShouldIMake() {
                         So let us help you decide what to eat for your next meal. No matter if it's for breakfast,
                         lunch, dinner or maybe just a snack your looking for, we got a lot of different recipes.
                         You can let us pick a random recipe, based on some preferences"
-                >
-                    <p>Rather browse through all of our recipes? <Link
-                        to={"/recipe-overview"}
-                    >Search all our recipes here.</Link></p>
-                </IntroBlock>
+                />
+
+                <p>Rather browse through all of our recipes? <Link
+                    to={"/recipe-overview"}
+                >Search all our recipes here.</Link></p>
 
                 <section>
                     <h2>Give me a recipe</h2>
@@ -74,7 +74,9 @@ function WhatShouldIMake() {
                                 <option value="">No diet restrictions</option>
                                 {dietRestrictions.map((dietRestriction) => {
                                     return (
-                                        <option value={dietRestriction} key={dietRestriction}>{dietRestriction}</option>
+                                        <option
+                                            value={dietRestriction} key={dietRestriction}
+                                        >{dietRestriction}</option>
                                     )
                                 })}
                             </select>
