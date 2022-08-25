@@ -19,31 +19,11 @@
     display: flex;
 }
 
-.search-fridge-form button {
-    background-color: hsl(173, 51%, 63%);
-    padding: 10px;
-    margin: 10px;
-    border: none;
-    border-radius: 10px;
-}
-
-.search-fridge-form button:hover {
-    border: 2px solid hsl(173, 51%, 43%);
-}
-
 .button {
     display: flex;
     justify-content: space-between;
 }
 
-button {
-    flex-direction: column;
-    background-color: hsl(173, 51%, 63%);
-    border-radius: 10px;
-    padding: 10px;
-    border: none;
-}
-
-button:hover {
-    border: 2px solid hsl(173, 51%, 43%);
+Button {
+    align-self: flex-start;
 }

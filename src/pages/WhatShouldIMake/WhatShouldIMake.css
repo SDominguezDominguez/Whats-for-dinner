@@ -4,30 +4,17 @@
     padding: 10px;
 }
 
-.what-to-make h2 {
-    text-align: center;
-}
-
 .what-to-make-form {
     display: flex;
     flex-direction: column;
+    margin-bottom: 10px;
 }
 
-.what-to-make-form label {
-    margin-bottom: 5px;
+.what-to-make-label {
+    display: flex;
+    gap: 20px;
 }
 
 .what-to-make-form select {
-    margin: 10px;
-}
-
-.what-to-make-form button {
-    background-color: hsl(173, 51%, 63%);
-    border: none;
-    padding: 10px;
-    border-radius: 10px;
-}
-
-.what-to-make-form button:hover {
-    border: 2px solid hsl(173, 51%, 43%);
+    display: flex;
 }

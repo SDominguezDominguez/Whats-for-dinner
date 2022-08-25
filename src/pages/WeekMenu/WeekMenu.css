@@ -6,10 +6,6 @@
     align-items: center;
 }
 
-.week-menu-form button, .week-menu-form select {
+.week-menu-form select {
     margin-left: 10px;
-}
-
-.week-menu-form button:hover {
-    border: 2px solid hsl(173, 51%, 43%);
 }

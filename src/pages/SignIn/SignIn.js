@@ -1,21 +1,22 @@
 import React, {useContext, useEffect} from 'react';
-import {useForm} from "react-hook-form";
 import {Link} from "react-router-dom";
 import axios from "axios";
+import {useForm} from "react-hook-form";
 import {AuthContext} from "../../context/AuthContext";
 import IntroBlock from "../../components/IntroBlock/IntroBlock";
 import "./SignIn.css";
+import Button from "../../components/Button/Button";
 
 function SignIn() {
     const {login} = useContext(AuthContext);
     const {register, handleSubmit} = useForm();
-    // const source = axios.CancelToken.source();
+    const source = axios.CancelToken.source();
 
-    // useEffect(() => {
-    //     return function cleanup() {
-    //         source.cancel();
-    //     }
-    // }, []);
+    useEffect(() => {
+        return function cleanup() {
+            source.cancel();
+        }
+    }, []);
 
     async function makeLogInRequest(data) {
 
@@ -23,8 +24,8 @@ function SignIn() {
             const response = await axios.post("https://frontend-educational-backend.herokuapp.com/api/auth/signin", {
                 username: data.username,
                 password: data.password,
-                // }, {
-                //     cancelToken: source.token,
+            }, {
+                cancelToken: source.token,
             });
 
             login(response.data.accessToken);
@@ -37,34 +38,50 @@ function SignIn() {
 
     return (
         <>
-            <IntroBlock
-                pageTitle="Sign in"
-                information="Welcome back!"
-            />
+            <main>
 
-            <section className="sign-in-form">
-                <p>Glad you're back. Enter your email address to proceed.</p>
-                <form onSubmit={handleSubmit(makeLogInRequest)}>
-                    <label htmlFor="username-field">
-                        Gebruikersnaam:
-                        <input
-                            type="text"
-                            id="username-field"
-                            {...register("username")}
+                <section>
+                    <IntroBlock
+                        pageTitle="Sign in"
+                        information="Welcome back!"
+                    />
+                </section>
+
+                <section className="sign-in-form">
+                    <p>Glad you're back. Enter your email address to proceed.</p>
+
+                    <form onSubmit={handleSubmit(makeLogInRequest)}>
+                        <label htmlFor="username-field">
+                            Username:
+                            <input
+                                type="text"
+                                id="username-field"
+                                {...register("username")}
+                            />
+                        </label>
+
+                        <label htmlFor="password-field">
+                            Password:
+                            <input
+                                type="password"
+                                id="password-field"
+                                {...register("password")}
+                            />
+                        </label>
+
+                        <Button
+                            type="submit"
+                            buttonText="Inloggen"
                         />
-                    </label>
-                    <label htmlFor="password-field">
-                        Wachtwoord:
-                        <input
-                            type="password"
-                            id="password-field"
-                            {...register("password")}
-                        />
-                    </label>
-                    <button type="submit">Inloggen</button>
-                </form>
-            </section>
-            <p>Heb je nog geen account? <Link to="/sign-up">Registreer</Link> je dan eerst!</p>
+
+                    </form>
+                </section>
+
+                <section>
+                    <p>Heb je nog geen account? <Link to="/sign-up">Registreer</Link> je dan eerst!</p>
+                </section>
+
+            </main>
         </>
     );
 }

@@ -4,6 +4,7 @@ import {useForm} from "react-hook-form";
 import axios from "axios";
 import IntroBlock from "../../components/IntroBlock/IntroBlock";
 import GetRecipe from "../../components/GetRecipe/GetRecipe";
+import Button from "../../components/Button/Button";
 import courses from "../../helpers/data/courses";
 import cuisines from "../../helpers/data/cuisines";
 import dietRestrictions from "../../helpers/data/dietRestrictions";
@@ -27,6 +28,7 @@ function WhatShouldIMake() {
     return (
         <>
             <main>
+
                 <section>
                     <IntroBlock
                         pageTitle="What should I make?"
@@ -41,12 +43,14 @@ function WhatShouldIMake() {
                         to={"/recipe-overview"}
                     >Search all our recipes here.</Link></p>
                 </section>
+
                 <section className="what-to-make">
                     <h2>Give me a recipe</h2>
-                        <form onSubmit={handleSubmit(onFormSubmit)} className="what-to-make-form">
 
-                            <label htmlFor="course">
-                                For which course would you like a recipe?
+                    <form onSubmit={handleSubmit(onFormSubmit)} className="what-to-make-form">
+
+                        <div className="what-to-make-label">
+                            <label htmlFor="course">For which course would you like a recipe?
                                 <select name="course" id="course" {...register("course")}>
                                     <option value="">All courses</option>
                                     {courses.map((course) => {
@@ -57,8 +61,7 @@ function WhatShouldIMake() {
                                 </select>
                             </label>
 
-                            <label htmlFor="cuisine">
-                                Cuisine:
+                            <label htmlFor="cuisine">Cuisine:
                                 <select name="cuisine-preference" id="cuisine" {...register("cuisine")}>
                                     <option value="">All cuisines</option>
                                     {cuisines.map((cuisine) => {
@@ -69,8 +72,7 @@ function WhatShouldIMake() {
                                 </select>
                             </label>
 
-                            <label htmlFor="diet-restriction">
-                                Do you have any diet restrictions?
+                            <label htmlFor="diet-restriction">Do you have any diet restrictions?
                                 <select name="dietRestriction" id="diet-restriction" {...register("dietRestriction")}>
                                     <option value="">No diet restrictions</option>
                                     {dietRestrictions.map((dietRestriction) => {
@@ -83,8 +85,7 @@ function WhatShouldIMake() {
                                 </select>
                             </label>
 
-                            <label htmlFor="intolerances">
-                                Do you have any intolerances?
+                            <label htmlFor="intolerances">Do you have any intolerances?
                                 <select name="intolerances" id="intolerances" {...register("intolerances")}>
                                     <option value="">No intolerances</option>
                                     {intolerances.map((intolerance) => {
@@ -94,14 +95,20 @@ function WhatShouldIMake() {
                                     })}
                                 </select>
                             </label>
+                        </div>
 
-                            <button type="submit">Get my recipe</button>
+                        <Button
+                            type="submit"
+                            buttonText="Get my recipe"
+                        />
 
-                        </form>
+                    </form>
                 </section>
+
                 <section className="recipes">
                     <GetRecipe recipeType={recipes}/>
                 </section>
+
             </main>
         </>
     );

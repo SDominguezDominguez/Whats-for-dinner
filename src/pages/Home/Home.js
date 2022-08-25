@@ -1,20 +1,30 @@
 import React, {useEffect, useState} from 'react';
-import './Home.css'
-import SearchBar from "../../components/SearchBar/SearchBar";
-import image1 from '../../../../whats-for-dinner/src/assets/funnyImg.jpg'
 import axios from "axios";
 import {Link} from "react-router-dom";
+import SearchBar from "../../components/SearchBar/SearchBar";
 import IntroBlock from "../../components/IntroBlock/IntroBlock";
 import GetRecipe from "../../components/GetRecipe/GetRecipe";
+import Button from "../../components/Button/Button";
+import image1 from '../../../../whats-for-dinner/src/assets/funnyImg.jpg'
+import './Home.css'
 
 function Home() {
     const [randomRecipe, setRandomRecipe] = useState(null);
     const [popularRecipes, setPopularRecipes] = useState(null);
     const [quickRecipes, setQuickRecipes] = useState(null);
+    const source = axios.CancelToken.source();
+
+    useEffect(() => {
+        return function cleanup() {
+            source.cancel();
+        }
+    }, []);
 
     async function getRandomRecipe() {
         try {
-            const recipe = await axios.get(`https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_API_KEY}&tags="main course"&number=1`);
+            const recipe = await axios.get(`https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_API_KEY}&tags="main course"&number=1`, {
+                cancelToken: source.token,
+            });
             setRandomRecipe(recipe.data.recipes[0]);
         } catch (e) {
             console.error(e);
@@ -22,9 +32,10 @@ function Home() {
     }
 
     useEffect(() => {
+
         async function getPopularRecipes() {
             try {
-                const popularRecipe = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&type="main course"&sort=popularity&number=10&addRecipeInformation=true`);
+                const popularRecipe = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&type="main course"&sort=popularity&number=8&addRecipeInformation=true`);
                 setPopularRecipes(popularRecipe.data.results);
             } catch (e) {
                 console.error(e);
@@ -33,7 +44,7 @@ function Home() {
 
         async function getQuickRecipes() {
             try {
-                const quickRecipe = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&type="main course"&sort=time&number=10&addRecipeInformation=true`);
+                const quickRecipe = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&type="main course"&sort=time&number=8&addRecipeInformation=true&sortDirection=asc`);
                 setQuickRecipes(quickRecipe.data.results);
             } catch (e) {
                 console.error(e);
@@ -60,7 +71,11 @@ function Home() {
                         pageTitle="What's for dinner tonight?"
                     >
                         <img src={image1} alt="funny what's for dinner"/>
-                        <button type="button" onClick={getRandomRecipe}>Get a random recipe</button>
+                        <Button
+                            type="button"
+                            onClickHandler={getRandomRecipe}
+                            buttonText="Get a random recipe"
+                        />
                     </IntroBlock>
 
                     {randomRecipe &&
@@ -73,18 +88,23 @@ function Home() {
                                     <li>👤 {randomRecipe.servings} servings</li>
                                 </ul>
                                 <Link to={`recipe/${randomRecipe.id}`}>
-                                    <button>Make recipe</button>
+                                    <Button
+                                        type="button"
+                                        buttonText="Make recipe"
+                                    />
                                 </Link>
                             </article>
                         </>
                     }
                 </section>
-                <section>
+
+                <section className="popular-recipes">
                     <h2>Popular recipes</h2>
                     <div className="recipes">
                         <GetRecipe recipeType={popularRecipes}/>
                     </div>
                 </section>
+
                 <section>
                     <h2>Quick recipes</h2>
                     <div className="recipes">
