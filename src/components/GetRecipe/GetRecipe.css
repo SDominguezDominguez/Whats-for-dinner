@@ -1,6 +1,6 @@
 .get-recipes {
     display: flex;
-    width: 300px;
+    width: 250px;
     border: 4px solid hsl(173, 51%, 53%);
     border-radius: 10px;
     margin: 10px;
@@ -42,4 +42,8 @@
 .get-recipes ul {
     display: flex;
     flex-wrap: wrap;
+}
+
+.get-recipes img {
+    width: 250px;
 }

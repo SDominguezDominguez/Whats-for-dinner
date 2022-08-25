@@ -1,0 +1,22 @@
+.sign-in-form {
+    border: 5px solid hsl(173, 51%, 63%);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.sign-in-form p {
+    align-content: center;
+}
+
+.sign-in-form form {
+    display: flex;
+    flex-direction: column;
+}
+
+.sign-in-form input {
+    margin: 10px;
+}
+
+.sign-in-form button {
+    align-self: start;
+}

@@ -38,7 +38,7 @@ function Profile() {
                 <p>Gebruikersnaam: {username}</p>
                 <p>E-mailadres: {email}</p>
             </section>
-            <section>
+            <section className="sign-in-form">
                 <h2>Wachtwoord wijzigen</h2>
                 <form onSubmit={handleSubmit(onFormSubmit)}>
                     <label htmlFor="new-password-field">

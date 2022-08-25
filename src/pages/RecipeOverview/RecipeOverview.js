@@ -5,6 +5,7 @@ import GetRecipe from "../../components/GetRecipe/GetRecipe";
 
 function RecipeOverview() {
     const [recipes, setRecipes] = useState(null);
+    const [foundRecipes, setFoundRecipes] = useState(null);
     const [offsetNext, setOffsetNext] = useState(null);
     const [offsetPrevious, setOffsetPrevious] = useState(null);
 
@@ -13,6 +14,7 @@ function RecipeOverview() {
             try {
                 const recipe = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&addRecipeInformation=true`);
                 console.log(recipe);
+                setFoundRecipes(recipe.data);
                 setRecipes(recipe.data.results);
                 setOffsetNext(recipe.data.offset + recipe.data.number);
             } catch (e) {
@@ -26,11 +28,12 @@ function RecipeOverview() {
 
     async function getNextRecipes() {
         try {
-            const recipe = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&addRecipeInformation=true&offset=${offsetNext}`);
-            console.log(recipe);
-            setRecipes(recipe.data.results);
-            setOffsetNext(recipe.data.offset + recipe.data.number);
-            setOffsetPrevious(recipe.data.offset - recipe.data.number);
+            const recipes = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&addRecipeInformation=true&offset=${offsetNext}`);
+            console.log(recipes);
+            setRecipes(recipes.data.results);
+            setFoundRecipes(recipes.data);
+            setOffsetNext(recipes.data.offset + recipes.data.number);
+            setOffsetPrevious(recipes.data.offset - recipes.data.number);
             console.log(offsetNext);
         } catch (e) {
             console.error(e);
@@ -39,11 +42,12 @@ function RecipeOverview() {
 
     async function getPreviousRecipes() {
         try {
-            const recipe = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&addRecipeInformation=true&offset=${offsetPrevious}`);
-            console.log(recipe);
-            setRecipes(recipe.data.results);
-            setOffsetNext(recipe.data.offset + recipe.data.number);
-            setOffsetPrevious(recipe.data.offset - recipe.data.number);
+            const recipes = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&addRecipeInformation=true&offset=${offsetPrevious}`);
+            console.log(recipes);
+            setRecipes(recipes.data.results);
+            setFoundRecipes(recipes.data);
+            setOffsetNext(recipes.data.offset + recipes.data.number);
+            setOffsetPrevious(recipes.data.offset - recipes.data.number);
         } catch (e) {
             console.error(e);
         }
@@ -55,11 +59,19 @@ function RecipeOverview() {
                 pageTitle="Recipes"
                 information="Browse through all our recipes"
             />
-
-            <GetRecipe recipeType={recipes} />
-
-            <button type="button" onClick={getPreviousRecipes}>Previous</button>
-            <button type="button" onClick={getNextRecipes}>Next</button>
+            <section className="recipes">
+                <GetRecipe recipeType={recipes}/>
+            </section>
+            <section className="button">
+                {recipes && foundRecipes.offset > 0 &&
+                    <button type="previous" onClick={getPreviousRecipes}>Previous</button>
+                }
+                {recipes &&
+                    <>
+                        <button type="next" onClick={getNextRecipes}>Next</button>
+                    </>
+                }
+            </section>
         </>
     );
 }

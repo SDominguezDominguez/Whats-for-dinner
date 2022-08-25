@@ -4,6 +4,7 @@ import {Link} from "react-router-dom";
 import axios from "axios";
 import {AuthContext} from "../../context/AuthContext";
 import IntroBlock from "../../components/IntroBlock/IntroBlock";
+import "./SignIn.css";
 
 function SignIn() {
     const {login} = useContext(AuthContext);
@@ -41,27 +42,28 @@ function SignIn() {
                 information="Welcome back!"
             />
 
-            <form onSubmit={handleSubmit(makeLogInRequest)}>
+            <section className="sign-in-form">
                 <p>Glad you're back. Enter your email address to proceed.</p>
-                <label htmlFor="username-field">
-                    Gebruikersnaam:
-                    <input
-                        type="text"
-                        id="username-field"
-                        {...register("username")}
-                    />
-                </label>
-                <label htmlFor="password-field">
-                    Wachtwoord:
-                    <input
-                        type="password"
-                        id="password-field"
-                        {...register("password")}
-                    />
-                </label>
-                <button type="submit">Inloggen</button>
-            </form>
-
+                <form onSubmit={handleSubmit(makeLogInRequest)}>
+                    <label htmlFor="username-field">
+                        Gebruikersnaam:
+                        <input
+                            type="text"
+                            id="username-field"
+                            {...register("username")}
+                        />
+                    </label>
+                    <label htmlFor="password-field">
+                        Wachtwoord:
+                        <input
+                            type="password"
+                            id="password-field"
+                            {...register("password")}
+                        />
+                    </label>
+                    <button type="submit">Inloggen</button>
+                </form>
+            </section>
             <p>Heb je nog geen account? <Link to="/sign-up">Registreer</Link> je dan eerst!</p>
         </>
     );

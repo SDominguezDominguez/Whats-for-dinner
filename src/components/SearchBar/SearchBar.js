@@ -29,7 +29,7 @@ function SearchBar({styling, searchText}) {
             console.error(e);
         }
         console.log(recipes);
-        navigate("/recipe-overview");
+        navigate("/search-results");
     }
 
     return (

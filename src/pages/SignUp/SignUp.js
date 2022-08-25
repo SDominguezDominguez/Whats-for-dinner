@@ -31,7 +31,7 @@ function SignUp() {
                 pageTitle="Register"
                 information="Save your favorite recipes and make your own week menu"
                 />
-
+            <section className="sign-in-form">
             <form onSubmit={handleSubmit(handleFormSubmit)}>
                 <label htmlFor="username-field">
                     Gebruikersnaam:
@@ -59,7 +59,7 @@ function SignUp() {
                 </label>
                 <button type="submit">Registreer</button>
             </form>
-
+            </section>
             <p>Heb je al een account? Je kunt je <Link to="/sign-in">hier</Link> inloggen.</p>
         </div>
     );
