@@ -10,7 +10,15 @@ function SearchContextProvider({children}) {
         recipes: null,
         status: "pending",
     });
+    const source = axios.CancelToken.source();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        return function cleanup() {
+            source.cancel();
+            localStorage.clear();
+        }
+    }, []);
 
     useEffect(() => {
         const queryPresent = localStorage.getItem("searchQuery");
@@ -47,6 +55,8 @@ function SearchContextProvider({children}) {
                 query: searchQuery,
                 recipes: fetchRecipes.data,
                 status: "done",
+            }, {
+                cancelToken: source.token,
             });
 
         } catch (e) {
@@ -56,6 +66,10 @@ function SearchContextProvider({children}) {
             })
             console.error(e);
         }
+    }
+
+    window.onbeforeunload = () => {
+        localStorage.removeItem('isAuth');
     }
 
     const searchData = {
