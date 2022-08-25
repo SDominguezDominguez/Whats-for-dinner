@@ -6,8 +6,6 @@ function SearchResults() {
     const {recipes} = useContext(SearchContext);
     const [searchResults, setSearchResults] = useState(null);
 
-    console.log(recipes);
-
     useEffect(() => {
         setSearchResults(recipes.recipes.results);
     }, []);
@@ -15,8 +13,10 @@ function SearchResults() {
     return (
         <>
             <main>
+                <h2>Search results for {recipes.query}</h2>
+
                 <section className="recipes">
-                <GetRecipe recipeType={searchResults} />
+                    <GetRecipe recipeType={searchResults}/>
                 </section>
 
             </main>

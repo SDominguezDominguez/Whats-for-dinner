@@ -14,7 +14,7 @@ function SearchContextProvider({children}) {
 
     useEffect(() => {
         const queryPresent = localStorage.getItem("searchQuery");
-        console.log(queryPresent);
+
         if (queryPresent) {
             getRecipes();
         } else {
@@ -35,11 +35,11 @@ function SearchContextProvider({children}) {
             recipes: null,
             status: "pending",
         });
+        navigate("/search-results");
     }
 
     async function getRecipes() {
         const searchQuery = localStorage.getItem("searchQuery");
-        console.log(searchQuery);
 
         try {
             const fetchRecipes = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&query=${searchQuery}&addRecipeInformation=true`);
@@ -48,9 +48,6 @@ function SearchContextProvider({children}) {
                 recipes: fetchRecipes.data,
                 status: "done",
             });
-
-            console.log(fetchRecipes);
-            navigate("/search-results");
 
         } catch (e) {
             setSearchResults({

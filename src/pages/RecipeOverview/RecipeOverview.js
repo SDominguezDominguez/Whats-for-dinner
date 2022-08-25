@@ -34,7 +34,6 @@ function RecipeOverview() {
             setFoundRecipes(recipes.data);
             setOffsetNext(recipes.data.offset + recipes.data.number);
             setOffsetPrevious(recipes.data.offset - recipes.data.number);
-            console.log(offsetNext);
         } catch (e) {
             console.error(e);
         }
