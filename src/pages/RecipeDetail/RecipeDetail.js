@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import {useParams} from "react-router-dom";
 import axios from "axios";
+import {useParams} from "react-router-dom";
+import "./RecipeDetail.css";
 
 function RecipeDetail() {
     const {id} = useParams();
@@ -21,30 +22,40 @@ function RecipeDetail() {
     }, [])
 
     return (
-        <div>
-            Het receptnummer is {id}
-            {recipe &&
-                <>
-                    <h2>{recipe.title}</h2>
-                    <img src={recipe.image} alt={recipe.title}/>
-                    <p>Cooking time: {recipe.readyInMinutes}
-                        Servings: {recipe.servings}
-                    </p>
-                </>
-            }
-            <ul>
-                {recipe && recipe.extendedIngredients.map((ingredients) => {
-                    return (
-                        <li key={ingredients.name}>{ingredients.original}</li>
-                    )
-                })}
-            </ul>
-            {/*{recipe.analyzedInstructions[0].steps.length > 0 && recipe.analyzedInstructions[0].steps.map((instructions) => {*/}
-            {/*    return (*/}
-            {/*        <p>{instructions.step}</p>*/}
-            {/*    )*/}
-            {/*})}*/}
-        </div>
+        <>
+            <main>
+                <section className="recipe-head">
+                    {recipe &&
+                        <>
+                            <h2>{recipe.title}</h2>
+                            <img src={recipe.image} alt={recipe.title}/>
+                            <ul>
+                                <li>Cooking time: {recipe.readyInMinutes}</li>
+                                <li>Servings: {recipe.servings}</li>
+                            </ul>
+                        </>
+                    }
+                </section>
+
+                <section className="recipe-information">
+                    <ul className="ingredients">
+                        {recipe && recipe.extendedIngredients.map((ingredients) => {
+                            return (
+                                <li key={ingredients.name}>{ingredients.original}</li>
+                            )
+                        })}
+                    </ul>
+
+                    <ul className="instructions">
+                        {recipe && recipe.analyzedInstructions[0].steps.length > 0 && recipe.analyzedInstructions[0].steps.map((instructions) => {
+                            return (
+                                <li key={instructions.number}>Step {instructions.number}: {instructions.step}</li>
+                            )
+                        })}
+                    </ul>
+                </section>
+            </main>
+        </>
     );
 }
 

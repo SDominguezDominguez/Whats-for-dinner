@@ -10,7 +10,7 @@ function NavBar() {
     const navigate = useNavigate();
 
     return (
-        <>
+        <div className="navbar">
             <header>
                 <Link to="/">
                     <img src={logo} alt="Logo"/>
@@ -41,6 +41,7 @@ function NavBar() {
                     }
                 </div>
             </header>
+
             <nav>
                 <ul>
                     <NavLink to="/">
@@ -66,7 +67,7 @@ function NavBar() {
 
                 </ul>
             </nav>
-        </>
+        </div>
     )
         ;
 }

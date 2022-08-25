@@ -13,8 +13,7 @@ import SignUp from "./pages/SignUp/SignUp";
 import Favorites from "./pages/Favorites/Favorites";
 import RecipeOverview from "./pages/RecipeOverview/RecipeOverview";
 import RecipeDetail from "./pages/RecipeDetail/RecipeDetail";
-import SearchBar from "./components/SearchBar/SearchBar";
-import SearchResults from "./pages/SearchResults";
+import SearchResults from "./pages/SearchResults/SearchResults";
 
 function App() {
     const {isAuth} = useContext(AuthContext);
@@ -35,7 +34,10 @@ function App() {
                 <Route path="/sign-in" element={<SignIn/>}/>
                 <Route path="/sign-up" element={<SignUp/>}/>
                 <Route path="/recipe-overview" element={<RecipeOverview/>}/>
-                <Route path="/recipe/:id" element={<RecipeDetail/>} />
+                <Route path="/recipe/:id" element={<RecipeDetail/>}/>
+                <Route
+                    path="/search-results"
+                    element={<SearchResults/>}/>
             </Routes>
         </>
     )
