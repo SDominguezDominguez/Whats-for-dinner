@@ -1,12 +1,10 @@
-import React, {useState} from 'react';
-import axios from "axios";
+import React, {useContext, useState} from 'react';
 import './SearchBar.css'
-import {useNavigate} from "react-router-dom";
+import {SearchContext} from "../../context/SearchContext";
 
 function SearchBar({styling, searchText}) {
+    const {getSearchQuery} = useContext(SearchContext);
     const [query, setQuery] = useState("");
-    const [recipes, setRecipes] = useState(null);
-    const navigate = useNavigate();
 
     let css;
 
@@ -18,23 +16,14 @@ function SearchBar({styling, searchText}) {
         css = "searchbar-pantry"
     }
 
-    async function search(e) {
+    async function searchRequest(e) {
         e.preventDefault();
-        console.log(query);
-
-        try {
-            const fetchSearchResult = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&query=${query}`);
-            setRecipes(fetchSearchResult.data);
-        } catch (e) {
-            console.error(e);
-        }
-        console.log(recipes);
-        navigate("/recipe-overview");
+        getSearchQuery(query);
     }
 
     return (
         <>
-            <form onSubmit={search} className={css}>
+            <form onSubmit={searchRequest} className={css}>
                 <input
                     type="text"
                     name="search"

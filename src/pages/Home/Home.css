@@ -1,38 +1,17 @@
-.random-recipe-intro {
+.intro-home {
     display: flex;
-    justify-content: space-around;
-    font-size: 40px;
-    padding: 10px
 }
 
-.random-recipe-intro img {
-    height: 400px;
-    margin-right: 15px;
-}
-
-.random-recipe-intro button {
+.recipes {
     display: flex;
-    align-items: center;
-    align-self: flex-end;
-    height: 30px;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
-.random-recipe-intro p {
-    display: flex;
-    width: 60%;
-    align-items: center;
+h2 {
+    text-align: center;
 }
 
-.random-recipe {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.random-recipe h1 {
-    font-size: 30px;
-}
-
-.random-recipe p {
-    display: flex;
+.popular-recipes {
+    margin-bottom: 50px;
 }

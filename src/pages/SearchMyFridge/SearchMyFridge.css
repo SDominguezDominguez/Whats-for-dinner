@@ -1,0 +1,29 @@
+.search-fridge {
+    border-radius: 10px;
+    border: 2px solid hsl(173, 51%, 63%);
+    padding: 10px;
+}
+
+.search-fridge-form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.search-fridge-form-label{
+    display: flex;
+    gap: 20px;
+}
+
+.search-fridge-form-label input, .search-fridge-form-label select{
+    display: flex;
+}
+
+.button {
+    display: flex;
+    justify-content: space-between;
+}
+
+Button {
+    align-self: flex-start;
+}

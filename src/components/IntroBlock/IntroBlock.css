@@ -1,0 +1,43 @@
+.intro-block {
+    display: flex;
+    margin-bottom: 30px;
+    border-radius: 10px;
+}
+
+.intro-center {
+    order: 2;
+    margin-left: 20px;
+    flex-basis: 50%;
+    margin-right: 30px;
+}
+
+h1 {
+    font-size: 40px;
+    color: hsl(173, 51%, 63%);
+}
+
+p {
+    font-size: 25px;
+    align-self: center;
+    order: 3;
+}
+
+.intro-block img {
+    height: 400px;
+    margin: 10px 30px;
+    order: 1;
+}
+
+.intro-block button {
+    order: 3;
+    align-self: flex-end;
+    margin: 10px;
+    background-color: hsl(173, 51%, 63%);
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.intro-block button:hover {
+    cursor: pointer;
+}

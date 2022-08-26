@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
-import {useForm} from "react-hook-form";
 import axios from "axios";
+import {useForm} from "react-hook-form";
 import IntroBlock from "../../components/IntroBlock/IntroBlock";
 import GetRecipe from "../../components/GetRecipe/GetRecipe";
+import "./WeekMenu.css";
+import Button from "../../components/Button/Button";
 
 function WeekMenu() {
     const {register, handleSubmit} = useForm();
@@ -11,7 +13,6 @@ function WeekMenu() {
     async function onFormSubmit(data) {
         try {
             const recipes = await axios.get(`https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_API_KEY}&tags="main course"&number=${data.amountOfDays}`);
-            console.log(recipes);
             setRecipes(recipes.data.recipes);
         } catch (e) {
             console.error(e);
@@ -21,13 +22,17 @@ function WeekMenu() {
     return (
         <>
             <main>
+
                 <section>
                     <IntroBlock
                         pageTitle="Make a week menu"
                         information="Choose the amount of days you would like a dinner menu for. Our website will make a week menu for you and save it. Want to review your week menu? Just come back to this page."
                     />
+                </section>
 
-                    <form onSubmit={handleSubmit(onFormSubmit)}>
+                <section>
+                    <form onSubmit={handleSubmit(onFormSubmit)} className="week-menu-form">
+
                         <label htmlFor="amount-of-days">
                             Amount of days
                             <select name="amountOfDays" id="amount-of-days" {...register("amountOfDays")}>
@@ -39,13 +44,20 @@ function WeekMenu() {
                                 <option value="6">6</option>
                                 <option value="7">7</option>
                             </select>
-                            <button type="submit">Make week menu</button>
                         </label>
+
+                        <Button
+                            type="submit"
+                            buttonText="Make week menu"
+                        />
+
                     </form>
                 </section>
-                <section>
-                    <GetRecipe recipeType={recipes} />
+
+                <section className="recipes">
+                    <GetRecipe recipeType={recipes}/>
                 </section>
+
             </main>
         </>
     );

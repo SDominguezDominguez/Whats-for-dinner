@@ -1,0 +1,20 @@
+.what-to-make {
+    border: 3px solid hsl(173, 51%, 63%);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.what-to-make-form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.what-to-make-label {
+    display: flex;
+    gap: 20px;
+}
+
+.what-to-make-form select {
+    display: flex;
+}
