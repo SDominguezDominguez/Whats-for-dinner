@@ -14,15 +14,21 @@ import "./WhatShouldIMake.css";
 function WhatShouldIMake() {
     const {register, handleSubmit} = useForm();
     const [recipes, setRecipes] = useState(null);
+    const [error, setError] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     async function onFormSubmit(data) {
+        setError(false);
+        setLoading(true);
 
         try {
             const recipe = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&type=${data.course}&cuisine=${data.cuisine}&diet=${data.dietRestriction}&intolerances=${data.intolerances}&addRecipeInformation=true&sort=random&number=3`);
             setRecipes(recipe.data.results);
         } catch (e) {
+            setError(true);
             console.error(e);
         }
+        setLoading(false);
     }
 
     return (
@@ -106,6 +112,8 @@ function WhatShouldIMake() {
                 </section>
 
                 <section className="recipes">
+                    {error && <span>Er is iets mis gegaan met het ophalen van de data</span>}
+                    {loading && <span>Loading...</span>}
                     <GetRecipe recipeType={recipes}/>
                 </section>
 

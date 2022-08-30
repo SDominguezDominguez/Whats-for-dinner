@@ -11,6 +11,7 @@ function SignIn() {
     const {login} = useContext(AuthContext);
     const {register, handleSubmit} = useForm();
     const source = axios.CancelToken.source();
+    const [error, setError] = useState(false);
 
     useEffect(() => {
         return function cleanup() {
@@ -19,6 +20,7 @@ function SignIn() {
     }, []);
 
     async function makeLogInRequest(data) {
+        setError(false);
 
         try {
             const response = await axios.post("https://frontend-educational-backend.herokuapp.com/api/auth/signin", {
@@ -30,8 +32,8 @@ function SignIn() {
 
             login(response.data.accessToken);
 
-        } catch
-            (e) {
+        } catch (e) {
+            setError(true);
             console.error(e);
         }
     }
@@ -68,6 +70,7 @@ function SignIn() {
                                 {...register("password")}
                             />
                         </label>
+                        {error && <span>Combinatie van emailadres en wachtwoord is onjuist</span>}
 
                         <Button
                             type="submit"

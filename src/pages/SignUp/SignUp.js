@@ -1,14 +1,19 @@
-import React from 'react';
+import React, {useState} from 'react';
 import axios from "axios";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import IntroBlock from "../../components/IntroBlock/IntroBlock";
 import Button from "../../components/Button/Button";
 
 function SignUp() {
     const {register, handleSubmit} = useForm();
+    const [error, setError] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
     async function handleFormSubmit(data) {
+        setError(false);
+        setLoading(true);
 
         try {
             const register = await axios.post("https://frontend-educational-backend.herokuapp.com/api/auth/signup", {
@@ -17,10 +22,12 @@ function SignUp() {
                 password: data.password,
                 role: ["user"],
             })
-
+            navigate("/sign-in");
         } catch (e) {
+            setError(true);
             console.error(e);
         }
+        setLoading(false);
     }
 
     return (
@@ -63,6 +70,9 @@ function SignUp() {
                                 {...register("password")}
                             />
                         </label>
+
+                        {error && <span>Dit account bestaat al. Probeer een ander e-mailadres.</span>}
+                        {loading && <span>Loading...</span>}
 
                         <Button
                             type="submit"

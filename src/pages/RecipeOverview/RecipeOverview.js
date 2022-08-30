@@ -10,17 +10,24 @@ function RecipeOverview() {
     const [foundRecipes, setFoundRecipes] = useState(null);
     const [offsetNext, setOffsetNext] = useState(null);
     const [offsetPrevious, setOffsetPrevious] = useState(null);
+    const [error, setError] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         async function getRecipes() {
+            setError(false);
+            setLoading(true);
+
             try {
                 const recipe = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&addRecipeInformation=true&number=25`);
                 setFoundRecipes(recipe.data);
                 setRecipes(recipe.data.results);
                 setOffsetNext(recipe.data.offset + recipe.data.number);
             } catch (e) {
+                setError(true);
                 console.error(e);
             }
+            setLoading(false);
         }
 
         getRecipes();
@@ -28,6 +35,9 @@ function RecipeOverview() {
     }, []);
 
     async function getNextRecipes() {
+        setError(false);
+        setLoading(true);
+
         try {
             const recipes = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&addRecipeInformation=true&offset=${offsetNext}`);
             setRecipes(recipes.data.results);
@@ -35,11 +45,16 @@ function RecipeOverview() {
             setOffsetNext(recipes.data.offset + recipes.data.number);
             setOffsetPrevious(recipes.data.offset - recipes.data.number);
         } catch (e) {
+            setError(true);
             console.error(e);
         }
+        setLoading(false);
     }
 
     async function getPreviousRecipes() {
+        setError(false);
+        setLoading(true);
+
         try {
             const recipes = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&addRecipeInformation=true&offset=${offsetPrevious}`);
             setRecipes(recipes.data.results);
@@ -47,8 +62,10 @@ function RecipeOverview() {
             setOffsetNext(recipes.data.offset + recipes.data.number);
             setOffsetPrevious(recipes.data.offset - recipes.data.number);
         } catch (e) {
+            setError(true);
             console.error(e);
         }
+        setLoading(false);
     }
 
     return (
@@ -62,10 +79,14 @@ function RecipeOverview() {
                 </section>
 
                 <section className="recipes">
+                    {error && <span>Er is iets mis gegaan met het ophalen van de data</span>}
+                    {loading && <span>Loading...</span>}
                     <GetRecipe recipeType={recipes}/>
                 </section>
 
                 <section className="overview-buttons">
+                    {error && <span>Er is iets mis gegaan met het ophalen van de data</span>}
+                    {loading && <span>Loading...</span>}
                     {recipes && foundRecipes.offset > 0 &&
                         <Button
                             type="button"
