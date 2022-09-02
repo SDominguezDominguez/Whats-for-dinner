@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import courses from "../../helpers/data/courses";
 import cookingTimes from "../../helpers/data/cookingTimes";
@@ -16,13 +16,22 @@ function SearchMyFridge() {
     const [offsetPrevious, setOffsetPrevious] = useState(null);
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(false);
+    const source = axios.CancelToken.source();
+
+    useEffect(() => {
+        return function cleanup() {
+            source.cancel();
+        }
+    }, []);
 
     async function onFormSubmit(data) {
         setError(false);
         setLoading(true);
 
         try {
-            const recipes = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&query=${data.searchQuery}&type=${data.course}&maxReadyTime=${data.maxPrepTime}&addRecipeInformation=true`);
+            const recipes = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&query=${data.searchQuery}&type=${data.course}&maxReadyTime=${data.maxPrepTime}&addRecipeInformation=true`, {
+                cancelToken: source.token,
+            });
             setRecipes(recipes.data.results);
             setFoundRecipes(recipes.data);
             setOffsetNext(recipes.data.offset + recipes.data.number);
@@ -38,7 +47,9 @@ function SearchMyFridge() {
         setLoading(true);
 
         try {
-            const recipe = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&addRecipeInformation=true&offset=${offsetNext}`);
+            const recipe = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&addRecipeInformation=true&offset=${offsetNext}`, {
+                cancelToken: source.token,
+            });
             setRecipes(recipe.data.results);
             setFoundRecipes(recipe.data);
             setOffsetNext(recipe.data.offset + recipe.data.number);
@@ -55,7 +66,9 @@ function SearchMyFridge() {
         const [loading, setLoading] = useState(false);
 
         try {
-            const recipe = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&addRecipeInformation=true&offset=${offsetPrevious}`);
+            const recipe = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&addRecipeInformation=true&offset=${offsetPrevious}`, {
+                cancelToken: source.token,
+            });
             setRecipes(recipe.data.results);
             setFoundRecipes(recipe.data);
             setOffsetNext(recipe.data.offset + recipe.data.number);

@@ -46,7 +46,9 @@ function Home() {
             setLoading(true);
 
             try {
-                const popularRecipe = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&type="main course"&sort=popularity&number=8&addRecipeInformation=true`);
+                const popularRecipe = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&type="main course"&sort=popularity&number=8&addRecipeInformation=true`, {
+                    cancelToken: source.token,
+                });
                 setPopularRecipes(popularRecipe.data.results);
             } catch (e) {
                 setError(true);
@@ -60,7 +62,9 @@ function Home() {
             setLoading(true);
 
             try {
-                const quickRecipe = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&type="main course"&sort=time&number=8&addRecipeInformation=true&sortDirection=asc`);
+                const quickRecipe = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&type="main course"&sort=time&number=8&addRecipeInformation=true&sortDirection=asc`, {
+                    cancelToken: source.token,
+                });
                 setQuickRecipes(quickRecipe.data.results);
             } catch (e) {
                 setError(true);

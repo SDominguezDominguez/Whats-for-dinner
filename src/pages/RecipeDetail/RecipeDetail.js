@@ -8,6 +8,13 @@ function RecipeDetail() {
     const [recipe, setRecipe] = useState(null);
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(false);
+    const source = axios.CancelToken.source();
+
+    useEffect(() => {
+        return function cleanup() {
+            source.cancel();
+        }
+    }, []);
 
     useEffect(() => {
         async function getRecipe() {
@@ -15,7 +22,9 @@ function RecipeDetail() {
             setLoading(true);
 
             try {
-                const recipe = await axios.get(`https://api.spoonacular.com/recipes/${id}/information?apiKey=${process.env.REACT_APP_API_KEY}`);
+                const recipe = await axios.get(`https://api.spoonacular.com/recipes/${id}/information?apiKey=${process.env.REACT_APP_API_KEY}`, {
+                    cancelToken: source.token,
+                });
                 console.log(recipe);
                 setRecipe(recipe.data);
             } catch (e) {
