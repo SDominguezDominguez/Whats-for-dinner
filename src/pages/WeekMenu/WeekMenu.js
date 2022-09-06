@@ -62,8 +62,8 @@ function WeekMenu() {
                 </section>
 
                 <section className="recipes">
-                    {error && <span>Er is iets mis gegaan met het ophalen van de data</span>}
-                    {loading && <span>Loading...</span>}
+                    {error && <span className="error">Something went wrong while retrieving the data</span>}
+                    {loading && <span className="loading">Loading...</span>}
                     <GetRecipe recipeType={recipes}/>
                 </section>
 

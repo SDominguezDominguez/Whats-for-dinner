@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Link} from "react-router-dom";
 import axios from "axios";
 import {useForm} from "react-hook-form";
@@ -70,18 +70,18 @@ function SignIn() {
                                 {...register("password")}
                             />
                         </label>
-                        {error && <span>Combinatie van emailadres en wachtwoord is onjuist</span>}
+                        {error && <span>Combination of email address and password is incorrect</span>}
 
                         <Button
                             type="submit"
-                            buttonText="Inloggen"
+                            buttonText="Sign in"
                         />
 
                     </form>
                 </section>
 
                 <section>
-                    <p>Heb je nog geen account? <Link to="/sign-up">Registreer</Link> je dan eerst!</p>
+                    <p>Don't have an account yet? Then <Link to="/sign-up">register</Link> first!</p>
                 </section>
 
             </main>

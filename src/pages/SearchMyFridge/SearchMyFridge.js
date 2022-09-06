@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import axios from "axios";
 import courses from "../../helpers/data/courses";
 import cookingTimes from "../../helpers/data/cookingTimes";
@@ -16,22 +16,13 @@ function SearchMyFridge() {
     const [offsetPrevious, setOffsetPrevious] = useState(null);
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(false);
-    const source = axios.CancelToken.source();
-
-    useEffect(() => {
-        return function cleanup() {
-            source.cancel();
-        }
-    }, []);
 
     async function onFormSubmit(data) {
         setError(false);
         setLoading(true);
 
         try {
-            const recipes = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&query=${data.searchQuery}&type=${data.course}&maxReadyTime=${data.maxPrepTime}&addRecipeInformation=true`, {
-                cancelToken: source.token,
-            });
+            const recipes = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&query=${data.searchQuery}&type=${data.course}&maxReadyTime=${data.maxPrepTime}&addRecipeInformation=true`);
             setRecipes(recipes.data.results);
             setFoundRecipes(recipes.data);
             setOffsetNext(recipes.data.offset + recipes.data.number);
@@ -47,9 +38,7 @@ function SearchMyFridge() {
         setLoading(true);
 
         try {
-            const recipe = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&addRecipeInformation=true&offset=${offsetNext}`, {
-                cancelToken: source.token,
-            });
+            const recipe = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&addRecipeInformation=true&offset=${offsetNext}`);
             setRecipes(recipe.data.results);
             setFoundRecipes(recipe.data);
             setOffsetNext(recipe.data.offset + recipe.data.number);
@@ -62,13 +51,9 @@ function SearchMyFridge() {
     }
 
     async function getPreviousRecipes() {
-        const [error, setError] = useState(false);
-        const [loading, setLoading] = useState(false);
 
         try {
-            const recipe = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&addRecipeInformation=true&offset=${offsetPrevious}`, {
-                cancelToken: source.token,
-            });
+            const recipe = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&addRecipeInformation=true&offset=${offsetPrevious}`);
             setRecipes(recipe.data.results);
             setFoundRecipes(recipe.data);
             setOffsetNext(recipe.data.offset + recipe.data.number);
@@ -142,22 +127,18 @@ function SearchMyFridge() {
                 </section>
 
                 <section>
-                    {error && <span>Er is iets mis gegaan met het ophalen van de data</span>}
-                    {loading && <span>Loading...</span>}
+                    {error && <span className="error">Something went wrong while retrieving the data</span>}
+                    {loading && <span className="loading">Loading...</span>}
                     {recipes &&
                         <h2>Found {foundRecipes.totalResults} recipes</h2>
                     }
                 </section>
 
                 <section className="recipes">
-                    {error && <span>Er is iets mis gegaan met het ophalen van de data</span>}
-                    {loading && <span>Loading...</span>}
                     <GetRecipe recipeType={recipes}/>
                 </section>
 
                 <section className="button">
-                    {error && <span>Er is iets mis gegaan met het ophalen van de data</span>}
-                    {loading && <span>Loading...</span>}
                     {recipes && foundRecipes.offset > 0 &&
                         <button type="previous" onClick={getPreviousRecipes}>Previous</button>
                     }

@@ -15,6 +15,7 @@ function WhatShouldIMake() {
     const {register, handleSubmit} = useForm();
     const [recipes, setRecipes] = useState(null);
     const [error, setError] = useState(false);
+    const [noRecipes, setNoRecipes] = useState(false);
     const [loading, setLoading] = useState(false);
 
     async function onFormSubmit(data) {
@@ -24,6 +25,11 @@ function WhatShouldIMake() {
         try {
             const recipe = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&type=${data.course}&cuisine=${data.cuisine}&diet=${data.dietRestriction}&intolerances=${data.intolerances}&addRecipeInformation=true&sort=random&number=3`);
             setRecipes(recipe.data.results);
+
+            if (recipe.data.results.length === 0) {
+                setNoRecipes(true);
+            }
+
         } catch (e) {
             setError(true);
             console.error(e);
@@ -112,8 +118,9 @@ function WhatShouldIMake() {
                 </section>
 
                 <section className="recipes">
-                    {error && <span>Er is iets mis gegaan met het ophalen van de data</span>}
-                    {loading && <span>Loading...</span>}
+                    {error && <span className="error">Something went wrong while retrieving the data</span>}
+                    {loading && <span className="loading">Loading...</span>}
+                    {noRecipes && <span>No recipes were found. Try other preferences!</span>}
                     <GetRecipe recipeType={recipes}/>
                 </section>
 

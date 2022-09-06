@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import {Link, useNavigate} from "react-router-dom";
 import {useForm} from "react-hook-form";
@@ -6,23 +6,34 @@ import IntroBlock from "../../components/IntroBlock/IntroBlock";
 import Button from "../../components/Button/Button";
 
 function SignUp() {
-    const {register, handleSubmit} = useForm();
+    const {register, handleSubmit, formState: {errors}} = useForm();
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    const source = axios.CancelToken.source();
+
+    useEffect(() => {
+        return function cleanup() {
+            source.cancel();
+        }
+    }, []);
 
     async function handleFormSubmit(data) {
         setError(false);
         setLoading(true);
 
         try {
-            const register = await axios.post("https://frontend-educational-backend.herokuapp.com/api/auth/signup", {
+            await axios.post("https://frontend-educational-backend.herokuapp.com/api/auth/signup", {
                 username: data.username,
                 email: data.email,
                 password: data.password,
                 role: ["user"],
-            })
+            }, {
+                cancelToken: source.token,
+            });
+
             navigate("/sign-in");
+
         } catch (e) {
             setError(true);
             console.error(e);
@@ -37,7 +48,6 @@ function SignUp() {
                 <section>
                     <IntroBlock
                         pageTitle="Register"
-                        information="Save your favorite recipes and make your own week menu"
                     />
                 </section>
 
@@ -49,8 +59,15 @@ function SignUp() {
                             <input
                                 type="text"
                                 id="username-field"
-                                {...register("username")}
+                                {...register("username", {
+                                    required: "Username can't be empty",
+                                    minLength: {
+                                        value: 6,
+                                        message: "The username must contain at least 6 characters"
+                                    }
+                                })}
                             />
+                            {errors.username && <span>{errors.username.message}</span>}
                         </label>
 
                         <label htmlFor="email-field">
@@ -58,7 +75,7 @@ function SignUp() {
                             <input
                                 type="email"
                                 id="email-field"
-                                {...register("email")}
+                                {...register("email", {required: "E-mail can't be empty"})}
                             />
                         </label>
 
@@ -67,11 +84,18 @@ function SignUp() {
                             <input
                                 type="password"
                                 id="password-field"
-                                {...register("password")}
+                                {...register("password", {
+                                    required: "Password can't be empty",
+                                    minLength: {
+                                        value: 6,
+                                        message: "The password must contain at least 6 characters"
+                                    }
+                                })}
                             />
+                            {errors.password && <span>{errors.password.message}</span>}
                         </label>
 
-                        {error && <span>Dit account bestaat al. Probeer een ander e-mailadres.</span>}
+                        {error && <span>This account already exists. Try a different email address.</span>}
                         {loading && <span>Loading...</span>}
 
                         <Button
@@ -83,7 +107,7 @@ function SignUp() {
                 </section>
 
                 <section>
-                    <p>Heb je al een account? Je kunt je <Link to="/sign-in">hier</Link> inloggen.</p>
+                    <p>Do you already have an account? You can sign in <Link to="/sign-in">here</Link>.</p>
                 </section>
 
             </main>

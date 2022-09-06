@@ -7,7 +7,6 @@ import GetRecipe from "../../components/GetRecipe/GetRecipe";
 import Button from "../../components/Button/Button";
 import image1 from '../../../../whats-for-dinner/src/assets/funnyImg.jpg'
 import './Home.css'
-import {set} from "react-hook-form";
 
 function Home() {
     const [randomRecipe, setRandomRecipe] = useState(null);
@@ -46,9 +45,7 @@ function Home() {
             setLoading(true);
 
             try {
-                const popularRecipe = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&type="main course"&sort=popularity&number=8&addRecipeInformation=true`, {
-                    cancelToken: source.token,
-                });
+                const popularRecipe = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&type="main course"&sort=popularity&number=8&addRecipeInformation=true`);
                 setPopularRecipes(popularRecipe.data.results);
             } catch (e) {
                 setError(true);
@@ -62,9 +59,7 @@ function Home() {
             setLoading(true);
 
             try {
-                const quickRecipe = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&type="main course"&sort=time&number=8&addRecipeInformation=true&sortDirection=asc`, {
-                    cancelToken: source.token,
-                });
+                const quickRecipe = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&type="main course"&sort=time&number=8&addRecipeInformation=true&sortDirection=asc`);
                 setQuickRecipes(quickRecipe.data.results);
             } catch (e) {
                 setError(true);
@@ -100,8 +95,8 @@ function Home() {
                         />
                     </IntroBlock>
 
-                    {error && <span>Er is iets mis gegaan met het ophalen van de data</span>}
-                    {loading && <span>Loading...</span>}
+                    {error && <span className="error">Something went wrong while retrieving the data</span>}
+                    {loading && <span className="loading">Loading...</span>}
                     {randomRecipe &&
                         <>
                             <article className="get-recipes">
@@ -125,8 +120,8 @@ function Home() {
                 <section className="popular-recipes">
                     <h2>Popular recipes</h2>
                     <div className="recipes">
-                        {error && <span>Er is iets mis gegaan met het ophalen van de data</span>}
-                        {loading && <span>Loading...</span>}
+                        {error && <span className="error">Something went wrong while retrieving the data</span>}
+                        {loading && <span className="loading">Loading...</span>}
                         <GetRecipe recipeType={popularRecipes}/>
                     </div>
                 </section>
@@ -134,8 +129,8 @@ function Home() {
                 <section>
                     <h2>Quick recipes</h2>
                     <div className="recipes">
-                        {error && <span>Er is iets mis gegaan met het ophalen van de data</span>}
-                        {loading && <span>Loading...</span>}
+                        {error && <span className="error">Something went wrong while retrieving the data</span>}
+                        {loading && <span className="loading">Loading...</span>}
                         <GetRecipe recipeType={quickRecipes}/>
                     </div>
                 </section>

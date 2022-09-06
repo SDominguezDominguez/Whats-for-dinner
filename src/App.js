@@ -10,7 +10,6 @@ import {AuthContext} from "./context/AuthContext";
 import Profile from "./pages/Profile/Profile";
 import SignIn from "./pages/SignIn/SignIn";
 import SignUp from "./pages/SignUp/SignUp";
-import Favorites from "./pages/Favorites/Favorites";
 import RecipeOverview from "./pages/RecipeOverview/RecipeOverview";
 import RecipeDetail from "./pages/RecipeDetail/RecipeDetail";
 import SearchResults from "./pages/SearchResults/SearchResults";
@@ -30,7 +29,6 @@ function App() {
                     path="/profile"
                     element={isAuth ? <Profile/> : <SignIn/>}
                 />
-                <Route path="/favorites" element={<Favorites/>}/>
                 <Route path="/sign-in" element={<SignIn/>}/>
                 <Route path="/sign-up" element={<SignUp/>}/>
                 <Route path="/recipe-overview" element={<RecipeOverview/>}/>

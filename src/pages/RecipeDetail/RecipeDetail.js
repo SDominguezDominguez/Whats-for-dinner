@@ -8,13 +8,6 @@ function RecipeDetail() {
     const [recipe, setRecipe] = useState(null);
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(false);
-    const source = axios.CancelToken.source();
-
-    useEffect(() => {
-        return function cleanup() {
-            source.cancel();
-        }
-    }, []);
 
     useEffect(() => {
         async function getRecipe() {
@@ -22,10 +15,7 @@ function RecipeDetail() {
             setLoading(true);
 
             try {
-                const recipe = await axios.get(`https://api.spoonacular.com/recipes/${id}/information?apiKey=${process.env.REACT_APP_API_KEY}`, {
-                    cancelToken: source.token,
-                });
-                console.log(recipe);
+                const recipe = await axios.get(`https://api.spoonacular.com/recipes/${id}/information?apiKey=${process.env.REACT_APP_API_KEY}`);
                 setRecipe(recipe.data);
             } catch (e) {
                 setError(true);
@@ -41,8 +31,8 @@ function RecipeDetail() {
         <>
             <main>
                 <section className="recipe-head">
-                    {error && <span>Er is iets mis gegaan met het ophalen van de data</span>}
-                    {loading && <span>Loading...</span>}
+                    {error && <span className="error">Something went wrong while retrieving the data</span>}
+                    {loading && <span className="loading">Loading...</span>}
                     {recipe &&
                         <>
                             <h2>{recipe.title}</h2>
@@ -57,8 +47,6 @@ function RecipeDetail() {
 
                 <section className="recipe-information">
                     <ul className="ingredients">
-                        {error && <span>Er is iets mis gegaan met het ophalen van de data</span>}
-                        {loading && <span>Loading...</span>}
                         {recipe && recipe.extendedIngredients.map((ingredients) => {
                             return (
                                 <li key={ingredients.name}>{ingredients.original}</li>
@@ -67,8 +55,6 @@ function RecipeDetail() {
                     </ul>
 
                     <ul className="instructions">
-                        {error && <span>Er is iets mis gegaan met het ophalen van de data</span>}
-                        {loading && <span>Loading...</span>}
                         {recipe && recipe.analyzedInstructions[0].steps.length > 0 && recipe.analyzedInstructions[0].steps.map((instructions) => {
                             return (
                                 <li key={instructions.number}>Step {instructions.number}: {instructions.step}</li>

@@ -12,13 +12,6 @@ function RecipeOverview() {
     const [offsetPrevious, setOffsetPrevious] = useState(null);
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(false);
-    const source = axios.CancelToken.source();
-
-    useEffect(() => {
-        return function cleanup() {
-            source.cancel();
-        }
-    }, []);
 
     useEffect(() => {
         async function getRecipes() {
@@ -26,9 +19,7 @@ function RecipeOverview() {
             setLoading(true);
 
             try {
-                const recipe = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&addRecipeInformation=true&number=25`, {
-                    cancelToken: source.token,
-                });
+                const recipe = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&addRecipeInformation=true&number=25`);
                 setFoundRecipes(recipe.data);
                 setRecipes(recipe.data.results);
                 setOffsetNext(recipe.data.offset + recipe.data.number);
@@ -48,9 +39,7 @@ function RecipeOverview() {
         setLoading(true);
 
         try {
-            const recipes = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&addRecipeInformation=true&offset=${offsetNext}`, {
-                cancelToken: source.token,
-            });
+            const recipes = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&addRecipeInformation=true&offset=${offsetNext}`);
             setRecipes(recipes.data.results);
             setFoundRecipes(recipes.data);
             setOffsetNext(recipes.data.offset + recipes.data.number);
@@ -67,9 +56,7 @@ function RecipeOverview() {
         setLoading(true);
 
         try {
-            const recipes = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&addRecipeInformation=true&offset=${offsetPrevious}`, {
-                cancelToken: source.token,
-            });
+            const recipes = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&addRecipeInformation=true&offset=${offsetPrevious}`);
             setRecipes(recipes.data.results);
             setFoundRecipes(recipes.data);
             setOffsetNext(recipes.data.offset + recipes.data.number);
@@ -92,14 +79,12 @@ function RecipeOverview() {
                 </section>
 
                 <section className="recipes">
-                    {error && <span>Er is iets mis gegaan met het ophalen van de data</span>}
-                    {loading && <span>Loading...</span>}
+                    {error && <span className="error">Something went wrong while retrieving the data</span>}
+                    {loading && <span className="loading">Loading...</span>}
                     <GetRecipe recipeType={recipes}/>
                 </section>
 
                 <section className="overview-buttons">
-                    {error && <span>Er is iets mis gegaan met het ophalen van de data</span>}
-                    {loading && <span>Loading...</span>}
                     {recipes && foundRecipes.offset > 0 &&
                         <Button
                             type="button"
