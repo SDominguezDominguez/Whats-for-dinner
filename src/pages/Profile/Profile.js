@@ -49,21 +49,31 @@ function Profile() {
 
     useEffect(() => {
         async function getRandomFoodJoke() {
+            setLoading(true);
+            setError(false);
+
             try {
                 const randomFoodJoke = await axios.get(`https://api.spoonacular.com/food/jokes/random?apiKey=${process.env.REACT_APP_API_KEY}`);
                 setRandomJoke(randomFoodJoke.data.text);
             } catch (e) {
                 console.error(e);
+                setError(true);
             }
+            setLoading(false);
         }
 
         async function getRandomFoodTrivia() {
+            setLoading(true);
+            setError(false);
+
             try {
                 const randomFoodTrivia = await axios.get(`https://api.spoonacular.com/food/trivia/random?apiKey=${process.env.REACT_APP_API_KEY}`);
                 setRandomTrivia(randomFoodTrivia.data.text);
             } catch (e) {
                 console.error(e);
+                setError(true);
             }
+            setLoading(false);
         }
 
         getRandomFoodJoke();
