@@ -1,9 +1,10 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import axios from "axios";
 import {useForm} from "react-hook-form";
 import {AuthContext} from "../../context/AuthContext";
 import IntroBlock from "../../components/IntroBlock/IntroBlock";
 import Button from "../../components/Button/Button";
+import './Profile.css';
 
 function Profile() {
     const {register, handleSubmit, formState: {errors}, watch} = useForm();
@@ -15,6 +16,8 @@ function Profile() {
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(false);
     const [succes, setSucces] = useState(false);
+    const [randomJoke, setRandomJoke] = useState(null);
+    const [randomTrivia, setRandomTrivia] = useState(null);
 
     async function onFormSubmit(data) {
         if (password === repeatedPassword) {
@@ -43,6 +46,29 @@ function Profile() {
             setCheckedPassword(true)
         }
     }
+
+    useEffect(() => {
+        async function getRandomFoodJoke() {
+            try {
+                const randomFoodJoke = await axios.get(`https://api.spoonacular.com/food/jokes/random?apiKey=${process.env.REACT_APP_API_KEY}`);
+                setRandomJoke(randomFoodJoke.data.text);
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        async function getRandomFoodTrivia() {
+            try {
+                const randomFoodTrivia = await axios.get(`https://api.spoonacular.com/food/trivia/random?apiKey=${process.env.REACT_APP_API_KEY}`);
+                setRandomTrivia(randomFoodTrivia.data.text);
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        getRandomFoodJoke();
+        getRandomFoodTrivia();
+    }, []);
 
     return (
         <>
@@ -95,6 +121,16 @@ function Profile() {
                     </form>
                     {error && <span className="error">Something went wrong while sending the data</span>}
                     {loading && <span className="loading">Loading...</span>}
+                </section>
+
+                <section className="random-information">
+                    <div><h2>Food joke</h2>
+                        {randomJoke && <span>{randomJoke}</span>}
+                    </div>
+                    <div>
+                        <h2>Food Trivia</h2>
+                        {randomTrivia && <span>{randomTrivia}</span>}
+                    </div>
                 </section>
             </main>
         </>
