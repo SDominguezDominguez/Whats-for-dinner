@@ -1,7 +1,7 @@
 .get-recipes {
     display: flex;
     width: 250px;
-    border: 4px solid hsl(173, 51%, 53%);
+    border: 4px solid var(--main-color);
     border-radius: 10px;
     margin: 10px;
     flex-wrap: wrap;
@@ -9,7 +9,7 @@
 }
 
 .get-recipes:hover {
-    background-color: hsl(173, 51%, 63%);
+    background-color: var(--second-color);
     border-radius: 10px;
 }
 
@@ -28,14 +28,14 @@
 }
 
 .get-recipes button {
-    background-color: hsl(173, 51%, 63%);
+    background-color: var(--second-color);
     border-radius: 5px;
     padding: 10px;
     border: none;
 }
 
 .get-recipes:hover button {
-    background-color: hsl(173, 51%, 43%);
+    background-color: var(--border-color);
     border-radius: 10px;
 }
 

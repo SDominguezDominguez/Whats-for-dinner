@@ -1,5 +1,5 @@
 button {
-    background-color: hsl(173, 51%, 63%);
+    background-color: var(--main-color);
     border-radius: 10px;
     padding: 10px;
     margin: 10px;
@@ -7,5 +7,5 @@ button {
 }
 
 button:hover {
-    border: 2px solid hsl(173, 51%, 43%);
+    border: 2px solid var(--second-color);
 }
