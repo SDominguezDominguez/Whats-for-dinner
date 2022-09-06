@@ -1,5 +1,5 @@
 .what-to-make {
-    border: 3px solid hsl(173, 51%, 63%);
+    border: 3px solid var(--second-color);
     border-radius: 10px;
     padding: 10px;
 }

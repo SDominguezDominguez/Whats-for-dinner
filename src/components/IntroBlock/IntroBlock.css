@@ -13,7 +13,7 @@
 
 h1 {
     font-size: 40px;
-    color: hsl(173, 51%, 63%);
+    color: var(--main-color);
 }
 
 p {
@@ -32,7 +32,7 @@ p {
     order: 3;
     align-self: flex-end;
     margin: 10px;
-    background-color: hsl(173, 51%, 63%);
+    background-color: var(--second-color);
     border: none;
     border-radius: 5px;
     padding: 10px;

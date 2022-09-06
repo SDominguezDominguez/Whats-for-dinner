@@ -10,7 +10,6 @@ import {AuthContext} from "./context/AuthContext";
 import Profile from "./pages/Profile/Profile";
 import SignIn from "./pages/SignIn/SignIn";
 import SignUp from "./pages/SignUp/SignUp";
-import Favorites from "./pages/Favorites/Favorites";
 import RecipeOverview from "./pages/RecipeOverview/RecipeOverview";
 import RecipeDetail from "./pages/RecipeDetail/RecipeDetail";
 import SearchResults from "./pages/SearchResults/SearchResults";
@@ -24,20 +23,17 @@ function App() {
             <Routes>
                 <Route path="/" element={<Home/>}/>
                 <Route path="/search-my-fridge" element={<SearchMyFridge/>}/>
-                <Route path="/week-menu" element={<WeekMenu/>}/>
+                <Route path="/week-menu" element={isAuth ? <WeekMenu/> : <SignIn/>}/>
                 <Route path="/what-should-i-make" element={<WhatShouldIMake/>}/>
                 <Route
                     path="/profile"
                     element={isAuth ? <Profile/> : <SignIn/>}
                 />
-                <Route path="/favorites" element={<Favorites/>}/>
                 <Route path="/sign-in" element={<SignIn/>}/>
                 <Route path="/sign-up" element={<SignUp/>}/>
                 <Route path="/recipe-overview" element={<RecipeOverview/>}/>
                 <Route path="/recipe/:id" element={<RecipeDetail/>}/>
-                <Route
-                    path="/search-results"
-                    element={<SearchResults/>}/>
+                <Route path="/search-results" element={<SearchResults/>}/>
             </Routes>
         </>
     )

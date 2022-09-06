@@ -14,19 +14,29 @@ function SearchMyFridge() {
     const [foundRecipes, setFoundRecipes] = useState(null);
     const [offsetNext, setOffsetNext] = useState(null);
     const [offsetPrevious, setOffsetPrevious] = useState(null);
+    const [error, setError] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     async function onFormSubmit(data) {
+        setError(false);
+        setLoading(true);
+
         try {
             const recipes = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&query=${data.searchQuery}&type=${data.course}&maxReadyTime=${data.maxPrepTime}&addRecipeInformation=true`);
             setRecipes(recipes.data.results);
             setFoundRecipes(recipes.data);
             setOffsetNext(recipes.data.offset + recipes.data.number);
         } catch (e) {
+            setError(true);
             console.error(e);
         }
+        setLoading(false);
     }
 
     async function getNextRecipes() {
+        setError(false);
+        setLoading(true);
+
         try {
             const recipe = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&addRecipeInformation=true&offset=${offsetNext}`);
             setRecipes(recipe.data.results);
@@ -34,11 +44,14 @@ function SearchMyFridge() {
             setOffsetNext(recipe.data.offset + recipe.data.number);
             setOffsetPrevious(recipe.data.offset - recipe.data.number);
         } catch (e) {
+            setError(true);
             console.error(e);
         }
+        setLoading(false);
     }
 
     async function getPreviousRecipes() {
+
         try {
             const recipe = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&addRecipeInformation=true&offset=${offsetPrevious}`);
             setRecipes(recipe.data.results);
@@ -46,8 +59,10 @@ function SearchMyFridge() {
             setOffsetNext(recipe.data.offset + recipe.data.number);
             setOffsetPrevious(recipe.data.offset - recipe.data.number);
         } catch (e) {
+            setError(true);
             console.error(e);
         }
+        setLoading(false);
     }
 
     return (
@@ -112,6 +127,8 @@ function SearchMyFridge() {
                 </section>
 
                 <section>
+                    {error && <span className="error">Something went wrong while retrieving the data</span>}
+                    {loading && <span className="loading">Loading...</span>}
                     {recipes &&
                         <h2>Found {foundRecipes.totalResults} recipes</h2>
                     }

@@ -1,0 +1,9 @@
+.random-information {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 10px;
+}
+
+.random-information div {
+    max-width: 600px;
+}

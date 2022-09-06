@@ -21,9 +21,6 @@ function NavBar() {
                     </Link>
                     {isAuth ?
                         <>
-                            <Link to="/favorites">
-                                <button type="button">❤</button>
-                            </Link>
                             <button
                                 type="button"
                                 onClick={logout}

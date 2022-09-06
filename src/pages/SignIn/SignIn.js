@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Link} from "react-router-dom";
 import axios from "axios";
 import {useForm} from "react-hook-form";
@@ -11,6 +11,7 @@ function SignIn() {
     const {login} = useContext(AuthContext);
     const {register, handleSubmit} = useForm();
     const source = axios.CancelToken.source();
+    const [error, setError] = useState(false);
 
     useEffect(() => {
         return function cleanup() {
@@ -19,6 +20,7 @@ function SignIn() {
     }, []);
 
     async function makeLogInRequest(data) {
+        setError(false);
 
         try {
             const response = await axios.post("https://frontend-educational-backend.herokuapp.com/api/auth/signin", {
@@ -30,8 +32,8 @@ function SignIn() {
 
             login(response.data.accessToken);
 
-        } catch
-            (e) {
+        } catch (e) {
+            setError(true);
             console.error(e);
         }
     }
@@ -68,17 +70,18 @@ function SignIn() {
                                 {...register("password")}
                             />
                         </label>
+                        {error && <span>Combination of email address and password is incorrect</span>}
 
                         <Button
                             type="submit"
-                            buttonText="Inloggen"
+                            buttonText="Sign in"
                         />
 
                     </form>
                 </section>
 
                 <section>
-                    <p>Heb je nog geen account? <Link to="/sign-up">Registreer</Link> je dan eerst!</p>
+                    <p>Don't have an account yet? Then <Link to="/sign-up">register</Link> first!</p>
                 </section>
 
             </main>

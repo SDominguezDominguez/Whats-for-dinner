@@ -1,5 +1,5 @@
 .navbar {
-    background-color: hsl(173, 51%, 83%);
+    background-color: var(--main-color);
     margin-bottom: 20px;
 }
 
@@ -21,19 +21,15 @@ header {
 }
 
 .header-buttons button {
-    background-color: hsl(173, 51%, 63%);
+    background-color: var(--second-color);
     padding: 10px;
     border-radius: 5px;
     font-size: 15px;
     border: none;
 }
 
-.header-buttons button:hover {
-    background-color: hsl(173, 51%, 63%);
-}
-
 nav {
-    background-color: hsl(173, 51%, 83%);
+    background-color: var(--main-color);
     padding: 2px;
 }
 
@@ -55,13 +51,13 @@ nav a:link, a:visited {
 }
 
 nav a:hover {
-    background-color: hsl(173, 51%, 63%);
+    background-color: var(--second-color);
     padding: 1px;
     border-radius: 5px;
 }
 
 nav a.active {
-    background-color: hsl(173, 51%, 63%);
+    background-color: var(--second-color);
     padding: 1px;
     border-radius: 5px;
 }

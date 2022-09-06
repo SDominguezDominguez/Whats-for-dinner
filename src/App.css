@@ -1,0 +1,9 @@
+:root {
+    --main-color: hsl(173, 51%, 83%);
+    --second-color: hsl(173, 51%, 63%);
+    --border-color: hsl(173, 51%, 43%);
+}
+
+* {
+    font-size: 20px;
+}

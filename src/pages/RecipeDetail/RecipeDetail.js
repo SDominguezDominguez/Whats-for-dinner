@@ -6,16 +6,22 @@ import "./RecipeDetail.css";
 function RecipeDetail() {
     const {id} = useParams();
     const [recipe, setRecipe] = useState(null);
+    const [error, setError] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         async function getRecipe() {
+            setError(false);
+            setLoading(true);
+
             try {
                 const recipe = await axios.get(`https://api.spoonacular.com/recipes/${id}/information?apiKey=${process.env.REACT_APP_API_KEY}`);
-                console.log(recipe);
                 setRecipe(recipe.data);
             } catch (e) {
+                setError(true);
                 console.error(e);
             }
+            setLoading(false);
         }
 
         getRecipe();
@@ -25,9 +31,12 @@ function RecipeDetail() {
         <>
             <main>
                 <section className="recipe-head">
+                    {error && <span className="error">Something went wrong while retrieving the data</span>}
+                    {loading && <span className="loading">Loading...</span>}
                     {recipe &&
                         <>
                             <h2>{recipe.title}</h2>
+                            <p>{recipe.id}</p>
                             <img src={recipe.image} alt={recipe.title}/>
                             <ul>
                                 <li>Cooking time: {recipe.readyInMinutes}</li>

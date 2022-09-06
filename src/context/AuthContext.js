@@ -2,6 +2,7 @@ import React, {createContext, useEffect, useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import jwtDecode from "jwt-decode";
 import axios from "axios";
+import tokenValidity from "../helpers/tokenValidity";
 
 export const AuthContext = createContext({});
 
@@ -16,7 +17,7 @@ function AuthContextProvider({children}) {
     useEffect(() => {
         const token = localStorage.getItem("token");
 
-        if (token) {
+        if (token && tokenValidity(token)) {
             getData();
         }
         else {
