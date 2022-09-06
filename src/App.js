@@ -23,7 +23,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<Home/>}/>
                 <Route path="/search-my-fridge" element={<SearchMyFridge/>}/>
-                <Route path="/week-menu" element={<WeekMenu/>}/>
+                <Route path="/week-menu" element={isAuth ? <WeekMenu/> : <SignIn/>}/>
                 <Route path="/what-should-i-make" element={<WhatShouldIMake/>}/>
                 <Route
                     path="/profile"
@@ -33,9 +33,7 @@ function App() {
                 <Route path="/sign-up" element={<SignUp/>}/>
                 <Route path="/recipe-overview" element={<RecipeOverview/>}/>
                 <Route path="/recipe/:id" element={<RecipeDetail/>}/>
-                <Route
-                    path="/search-results"
-                    element={<SearchResults/>}/>
+                <Route path="/search-results" element={<SearchResults/>}/>
             </Routes>
         </>
     )
