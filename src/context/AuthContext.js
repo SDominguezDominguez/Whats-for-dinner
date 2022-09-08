@@ -19,14 +19,14 @@ function AuthContextProvider({children}) {
 
         if (token && tokenValidity(token)) {
             getData();
-        }
-        else {
+        } else {
             toggleIsAuth({
                 isAuth: false,
                 user: null,
                 status: 'done',
             });
-        }}, []);
+        }
+    }, []);
 
     function login(token) {
         localStorage.setItem("token", token);

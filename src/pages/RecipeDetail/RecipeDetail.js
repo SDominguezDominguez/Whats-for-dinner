@@ -36,7 +36,6 @@ function RecipeDetail() {
                     {recipe &&
                         <>
                             <h2>{recipe.title}</h2>
-                            <p>{recipe.id}</p>
                             <img src={recipe.image} alt={recipe.title}/>
                             <ul>
                                 <li>Cooking time: {recipe.readyInMinutes}</li>

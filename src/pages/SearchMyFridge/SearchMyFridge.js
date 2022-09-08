@@ -70,7 +70,7 @@ function SearchMyFridge() {
             <main>
                 <section>
                     <IntroBlock
-                        pageTitle="Search your fridge"
+                        pageTitle="Search my fridge"
                         information="Ever wondered what recipes you can cook with the ingredients you have in your fridge or pantry? Find
                     recipes that use as many of the given ingredients as possible and require as few additional
                     ingredients as possible."
@@ -78,9 +78,8 @@ function SearchMyFridge() {
                 </section>
 
                 <section className="search-fridge">
-                    <p>You can include ingredients to find the recipes you are looking for. Want to involve multiple
-                        ingredients? You can also select a dish type
-                        and time limit to further specify the results.</p>
+                    <p>You can include ingredients to find the recipes you are looking for. You can also select a dish
+                        type and time limit to further specify the results.</p>
 
                     <form onSubmit={handleSubmit(onFormSubmit)} className="search-fridge-form">
 
