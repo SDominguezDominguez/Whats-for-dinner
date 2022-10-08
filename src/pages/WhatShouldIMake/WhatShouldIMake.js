@@ -48,7 +48,7 @@ function WhatShouldIMake() {
                         a year that's not a surprise.
                         So let us help you decide what to eat for your next meal. No matter if it's for breakfast,
                         lunch, dinner or maybe just a snack your looking for, we got a lot of different recipes.
-                        You can let us pick a random recipe, based on some preferences"
+                        You can let us pick a random recipe, based on some preferences."
                     />
 
                     <p>Rather browse through all of our recipes? <Link
@@ -62,7 +62,7 @@ function WhatShouldIMake() {
                     <form onSubmit={handleSubmit(onFormSubmit)} className="what-to-make-form">
 
                         <div className="what-to-make-label">
-                            <label htmlFor="course">For which course would you like a recipe?
+                            <label htmlFor="course">Course:
                                 <select name="course" id="course" {...register("course")}>
                                     <option value="">All courses</option>
                                     {courses.map((course) => {
@@ -84,7 +84,7 @@ function WhatShouldIMake() {
                                 </select>
                             </label>
 
-                            <label htmlFor="diet-restriction">Do you have any diet restrictions?
+                            <label htmlFor="diet-restriction">Diet restrictions:
                                 <select name="dietRestriction" id="diet-restriction" {...register("dietRestriction")}>
                                     <option value="">No diet restrictions</option>
                                     {dietRestrictions.map((dietRestriction) => {
@@ -97,7 +97,7 @@ function WhatShouldIMake() {
                                 </select>
                             </label>
 
-                            <label htmlFor="intolerances">Do you have any intolerances?
+                            <label htmlFor="intolerances">Intolerances?
                                 <select name="intolerances" id="intolerances" {...register("intolerances")}>
                                     <option value="">No intolerances</option>
                                     {intolerances.map((intolerance) => {

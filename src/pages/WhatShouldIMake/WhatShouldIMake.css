@@ -12,9 +12,14 @@
 
 .what-to-make-label {
     display: flex;
-    gap: 20px;
+    justify-content: space-evenly;
 }
 
 .what-to-make-form select {
     display: flex;
+}
+
+.what-to-make-form Button {
+    align-self: center;
+    margin-top: 20px;
 }

@@ -1,5 +1,5 @@
 const dietRestrictions = [
-"gluten free",
+    "gluten free",
     "ketogenic",
     "vegetarian",
     "lacto-vegetarian",
