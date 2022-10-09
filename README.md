@@ -11,7 +11,7 @@
 <!-- TOC -->
 
 ## 1. Inleiding
-![img.png](../Whats-for-dinner-main/Whats-for-dinner-main/src/assets/homepage.png)
+![img.png](src/assets/homepage.png)
 
 Iedereen heeft er wel eens last van. Geen inspiratie voor het avondeten of het weekmenu. Daarnaast is het ook altijd
 weer zoeken naar gerechten op basis van ingrediënten die je nog in huis hebt. Of je wilt gewoon inspiratie opdoen.
